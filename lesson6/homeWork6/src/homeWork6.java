@@ -1,2 +1,19 @@
-package PACKAGE_NAME;public class homeWork6 {
+
+import java.util.*;
+
+public class homeWork6{
+    public static void main( String[] arguments){
+        int v;
+        Scanner sc =  new Scanner(System.in);
+        System.out.println("OK");
+        v=sc.nextInt();
+
+
+        if( v > 10 ){
+            System.out.println("Numarul este par.");
+        }
+        if( (v<15) && ( (v%2)==1) ){
+            System.out.println("Numarul este impar.");
+        }
+    }
 }
