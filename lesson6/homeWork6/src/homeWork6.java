@@ -9,7 +9,7 @@ public class homeWork6{
         v=sc.nextInt();
 
 
-        if( v > 10 ){
+        if( (v%2)==0 && v > 10 ){
             System.out.println("Numarul este par.");
         }
         if( (v<15) && ( (v%2)==1) ){
