@@ -17,18 +17,25 @@ public class EmployeeDao {
 
 
     //Extend the use of these functions to EmployeeService.java, just like read()
-    public Employee read(int employeeId){
-        //search employee by Id
 
+    int getEmployeeById(int id){
         for(int i=0; i<employeesArr.length; i++){
-            Employee currentEmployee=employeesArr[i];
+            Employee currentEmployee = employeesArr[i];
 
-            if( (currentEmployee != null)
-                    && currentEmployee.getId()==employeeId  ){
-                    return currentEmployee;
+            if(currentEmployee != null
+            && currentEmployee.getId()==id){
+                return i;
             }
         }
+        return -1;
+    }
 
+
+    public Employee read(int employeeId){
+        int i=getEmployeeById(employeeId);
+        if(i>=0){
+            return employeesArr[i];
+        }
 
         return null;
     }
@@ -37,14 +44,9 @@ public class EmployeeDao {
         //search employee by id
         // update data of the found employee
 
-        for(int i=0; i<employeesArr.length; i++){
-            Employee employee = employeesArr[i];
-
-            if( (employee != null)
-            && employee.getId()==employeeId){
-                employeesArr[i]=updatedEmployee;
-                return;
-            }
+        int i=getEmployeeById(employeeId);
+        if(i>=0){
+            employeesArr[i] = updatedEmployee;
         }
 
     }
@@ -52,18 +54,10 @@ public class EmployeeDao {
     public void delete(int id){
         //search employee by id
         //set the value to null
-
-        for(int i=0; i<employeesArr.length; i++){
-            Employee employee = employeesArr[i];
-
-            if( (employee != null)
-            && employee.getId()==id){
-                employeesArr[i]=null;
-                return;
-            }
+        int i=getEmployeeById(id);
+        if(i>=0){
+            employeesArr[i]=null;
         }
-
-
     }
 
 
