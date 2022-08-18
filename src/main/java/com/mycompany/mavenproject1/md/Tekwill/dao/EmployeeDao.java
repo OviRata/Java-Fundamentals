@@ -40,13 +40,14 @@ public class EmployeeDao {
         return null;
     }
 
-    public void update(int employeeId, Employee updatedEmployee){
+    public void update(int employeeId, String name, String lastName){
         //search employee by id
         // update data of the found employee
 
         int i=getEmployeeById(employeeId);
         if(i>=0){
-            employeesArr[i] = updatedEmployee;
+            employeesArr[i].setName(name );
+            employeesArr[i].setLastName(lastName );
         }
 
     }

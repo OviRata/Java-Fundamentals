@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import static java.lang.Integer.parseInt;
 import javax.swing.JOptionPane;
 import md.Tekwill.dao.EmployeeDao;
+import javax.swing.table.DefaultTableModel;
+
 
 import md.Tekwill.service.EmployeeService;
 import md.Tekwill.domain.Employee;
@@ -23,6 +25,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public static boolean isNumeric(String str) {
             if(str.length()==0){
             return false;}
+            
             for(int i=0; i<str.length(); i++){
                 if(str.charAt(i)<='9' && str.charAt(i)>='0'){
                 continue;
@@ -48,9 +51,9 @@ public class NewJFrame extends javax.swing.JFrame {
     EmployeeService employeeService = new EmployeeService();
     EmployeeDao employeeDao = new EmployeeDao();
     
-   javax.swing.table.DefaultTableModel model=new javax.swing.table.DefaultTableModel(
+   DefaultTableModel model=new DefaultTableModel(
     new Object [][] {
-
+    
     },
     new String [] {
         "ID", "Name", "Last Name"
@@ -70,6 +73,31 @@ public class NewJFrame extends javax.swing.JFrame {
         
     }
     
+    void tableUpdate(int id, String name, String lastName){
+        
+        for(int i=0; i<model.getRowCount(); i++){
+            if( Integer.valueOf( String.valueOf(model.getValueAt(i, 0))  )==id){
+                model.setValueAt(name, i, 1);
+                model.setValueAt(lastName, i, 2);
+                return;
+            }
+        }
+        
+        
+    }
+    
+    void tableCreate(Employee employee){
+         model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName() }  );
+    }
+    
+    void tableDelete(int id){
+        for(int i=0; i<model.getRowCount(); i++){
+            if( Integer.valueOf(String.valueOf(model.getValueAt(i, 0) ))==id ){
+                model.removeRow(i);
+                return;
+            }
+        }
+    }
     
     
     @SuppressWarnings("unchecked")
@@ -180,9 +208,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 String name = nameField.getText();
                 String lastName=lastNameField.getText();
 
-                Employee employee = new Employee(name, lastName);
-                employeeService.update(id, employee);
-                newTableModel();
+                //Employee employee = new Employee(name, lastName);
+                employeeService.update(id, name, lastName);
+                //newTableModel();
+                tableUpdate(id, name, lastName);
 
                 updateDialog.setVisible(false);
             }
@@ -248,7 +277,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 Employee employee = new Employee(name, lastName);
                 employeeService.create(employee);
 
-                newTableModel();
+                //newTableModel();
+                tableCreate(employee);
                 createDialog.setVisible(false);
             }
         });
@@ -372,7 +402,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
                 employeeService.delete(id);
 
-                newTableModel();
+                //newTableModel();
+                tableDelete(id);
                 deleteDialog.setVisible(false);
             }
         });
@@ -398,6 +429,11 @@ public class NewJFrame extends javax.swing.JFrame {
         findButton.setText("Find");
 
         editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Delete");
 
@@ -445,13 +481,21 @@ public class NewJFrame extends javax.swing.JFrame {
         createButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 createDialog.setModal(true);
+
+                nameField1.setText("");
+                lastNameField1.setText("");
+
                 createDialog.setSize(new Dimension(300, 200));
                 createDialog.setVisible(true);
+                //...
             }
         });
         findButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 findDialog.setModal(true);
+
+                idField1.setText("");
+
                 findDialog.setSize(new Dimension(300, 200));
                 findDialog.setVisible(true);
             }
@@ -459,6 +503,11 @@ public class NewJFrame extends javax.swing.JFrame {
         editButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 updateDialog.setModal(true);
+
+                idField.setText("");
+                lastNameField.setText("");
+                nameField.setText("");
+
                 updateDialog.setSize(new Dimension(300, 250));
                 updateDialog.setVisible(true);
             }
@@ -466,6 +515,9 @@ public class NewJFrame extends javax.swing.JFrame {
         deleteButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 deleteDialog.setModal(true);
+
+                idField2.setText("");
+
                 deleteDialog.setSize(new Dimension(300, 200));
                 deleteDialog.setVisible(true);
             }
@@ -473,6 +525,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editButtonActionPerformed
 
     /**
      * @param args the command line arguments
