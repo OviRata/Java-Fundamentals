@@ -30,13 +30,15 @@ public class EmployeeService {
         return employee;
     }
 
-    public void update(int id, String name, String lastName){
+    public boolean update(int id, String name, String lastName){
         if( (name.length()>0)
         && lastName.length()>0 ){
             employeeDao.update(id, name, lastName);
+            return true;
         }
         else{
             System.out.println("The data of the updated employee is inconsistent.");
+            return false;
         }
     }
 

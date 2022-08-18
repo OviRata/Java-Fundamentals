@@ -209,9 +209,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 String lastName=lastNameField.getText();
 
                 //Employee employee = new Employee(name, lastName);
-                employeeService.update(id, name, lastName);
+                if(employeeService.update(id, name, lastName)){
+                    tableUpdate(id, name, lastName);
+                }
                 //newTableModel();
-                tableUpdate(id, name, lastName);
 
                 updateDialog.setVisible(false);
             }
@@ -275,10 +276,12 @@ public class NewJFrame extends javax.swing.JFrame {
                 String lastName = lastNameField1.getText();
 
                 Employee employee = new Employee(name, lastName);
-                employeeService.create(employee);
+                if(employeeService.create(employee)){
+                    tableCreate(employee);
+                }
 
                 //newTableModel();
-                tableCreate(employee);
+
                 createDialog.setVisible(false);
             }
         });
