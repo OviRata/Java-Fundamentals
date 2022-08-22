@@ -11,6 +11,7 @@ import static java.lang.Integer.parseInt;
 import javax.swing.JOptionPane;
 import md.Tekwill.dao.EmployeeDao;
 import javax.swing.table.DefaultTableModel;
+import md.Tekwill.domain.Department;
 
 
 import md.Tekwill.service.EmployeeService;
@@ -49,36 +50,38 @@ public class NewJFrame extends javax.swing.JFrame {
     
     
     EmployeeService employeeService = new EmployeeService();
-    EmployeeDao employeeDao = new EmployeeDao();
+    //EmployeeDao employeeDao = new EmployeeDao();
+    Department[] departmentsArr = employeeService.getDepartments();
     
    DefaultTableModel model=new DefaultTableModel(
     new Object [][] {
     
     },
     new String [] {
-        "ID", "Name", "Last Name"
+        "ID", "Name", "Last Name", "Department"
     }
 );
     
     void newTableModel(){
         
-        Employee[] employees = employeeDao.getAll();
+        Employee[] employees = employeeService.getArr();
         model.setRowCount(0);
         for(int i=0; i<employees.length; i++){
             Employee employee = employees[i];
             if(employee!=null){
-                model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName() }  );
+                model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment().getName() }  );
             }
         }
         
     }
     
-    void tableUpdate(int id, String name, String lastName){
+    void tableUpdate(int id, String name, String lastName, String department){
         
         for(int i=0; i<model.getRowCount(); i++){
             if( Integer.valueOf( String.valueOf(model.getValueAt(i, 0))  )==id){
                 model.setValueAt(name, i, 1);
                 model.setValueAt(lastName, i, 2);
+                model.setValueAt(department, i, 3);
                 return;
             }
         }
@@ -87,7 +90,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     
     void tableCreate(Employee employee){
-         model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName() }  );
+         model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment().getName() }  );
     }
     
     void tableDelete(int id){
@@ -113,6 +116,8 @@ public class NewJFrame extends javax.swing.JFrame {
         lastNameField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
+        updateComboBox = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
         createDialog = new javax.swing.JDialog();
         cancelButton1 = new javax.swing.JButton();
         okButton1 = new javax.swing.JButton();
@@ -120,6 +125,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lastNameField1 = new javax.swing.JTextField();
+        createComboBox = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
         findDialog = new javax.swing.JDialog();
         cancelButton2 = new javax.swing.JButton();
         okButton2 = new javax.swing.JButton();
@@ -148,27 +155,33 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Name:");
 
+        updateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel10.setText("Department:");
+
         javax.swing.GroupLayout updateDialogLayout = new javax.swing.GroupLayout(updateDialog.getContentPane());
         updateDialog.getContentPane().setLayout(updateDialogLayout);
         updateDialogLayout.setHorizontalGroup(
             updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(updateDialogLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(42, 42, 42)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addGap(24, 24, 24))
             .addGroup(updateDialogLayout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel10))
                 .addGap(18, 18, 18)
-                .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lastNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(idField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(updateComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         updateDialogLayout.setVerticalGroup(
@@ -178,7 +191,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -186,11 +199,15 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(updateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
+                .addGap(28, 28, 28))
         );
 
         cancelButton.addActionListener(new ActionListener(){
@@ -207,16 +224,31 @@ public class NewJFrame extends javax.swing.JFrame {
                 int id =Integer.valueOf( idField.getText() );
                 String name = nameField.getText();
                 String lastName=lastNameField.getText();
+                String dep = (String) createComboBox.getSelectedItem();
+                /*Department department;
+                for(int i=0; i<departmentsArr.length; i++){
+                    if(departmentsArr[i].getName()==dep){
+                        department = departmentsArr[i];
+                        break;
+                    }
+                }*/
 
                 //Employee employee = new Employee(name, lastName);
-                if(employeeService.update(id, name, lastName)){
-                    tableUpdate(id, name, lastName);
+                if(employeeService.update(id, name, lastName, dep)){
+                    tableUpdate(id, name, lastName, dep);
                 }
                 //newTableModel();
 
                 updateDialog.setVisible(false);
             }
         });
+        String[] departmentsString = new String[departmentsArr.length ] ;
+        for(int i=0; i<departmentsArr.length; i++){
+
+            departmentsString[i] = departmentsArr[i].getName();
+
+        }
+        updateComboBox.setModel( new javax.swing.DefaultComboBoxModel<> (departmentsString) );
 
         cancelButton1.setText("Cancel");
 
@@ -225,6 +257,10 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel4.setText("Name:");
 
         jLabel5.setText("Last Name:");
+
+        createComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel9.setText("Department:");
 
         javax.swing.GroupLayout createDialogLayout = new javax.swing.GroupLayout(createDialog.getContentPane());
         createDialog.getContentPane().setLayout(createDialogLayout);
@@ -240,17 +276,19 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel9))
                 .addGap(18, 18, 18)
-                .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lastNameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lastNameField1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(nameField1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                    .addComponent(createComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         createDialogLayout.setVerticalGroup(
             createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createDialogLayout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -258,7 +296,11 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lastNameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(createDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(okButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -274,8 +316,20 @@ public class NewJFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e){
                 String name = nameField1.getText();
                 String lastName = lastNameField1.getText();
-
+                String dep = (String)createComboBox.getSelectedItem();
+                if(name.length()==0 || lastName.length()==0 ){
+                    createDialog.setVisible(false);
+                    return;
+                }
                 Employee employee = new Employee(name, lastName);
+
+                for(int i=0; i<departmentsArr.length; i++){
+                    if(departmentsArr[i].getName()==dep){
+                        employee.setDepartment(departmentsArr[i]);
+                        break;
+                    }
+                }
+
                 if(employeeService.create(employee)){
                     tableCreate(employee);
                 }
@@ -285,6 +339,13 @@ public class NewJFrame extends javax.swing.JFrame {
                 createDialog.setVisible(false);
             }
         });
+        /*String[] departmentsString = new String[departmentsArr.length ] ;
+        for(int i=0; i<departmentsArr.length; i++){
+
+            departmentsString[i] = departmentsArr[i].getName();
+
+        }*/
+        createComboBox.setModel( new javax.swing.DefaultComboBoxModel<> (departmentsString) );
 
         cancelButton2.setText("Cancel");
 
@@ -341,7 +402,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 if(employee != null){
                     String name=employee.getName();
                     String lastName = employee.getLastName();
-                    JOptionPane.showMessageDialog(null, "The employee with the specified id is:\n\tID: "+id+"\n\tName: "+name+"\n\tLast Name: "+lastName);
+                    String dep = employee.getDepartment().getName();
+                    JOptionPane.showMessageDialog(null, "The employee with the specified id is:\n\tID: "+id+"\n\tName: "+name+"\n\tLast Name: "+lastName+"\n\tDepartment: "+dep);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "The employee with the specified id hasn't been found...");
@@ -488,7 +550,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 nameField1.setText("");
                 lastNameField1.setText("");
 
-                createDialog.setSize(new Dimension(300, 200));
+                createDialog.setSize(new Dimension(350, 300));
                 createDialog.setVisible(true);
                 //...
             }
@@ -511,7 +573,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 lastNameField.setText("");
                 nameField.setText("");
 
-                updateDialog.setSize(new Dimension(300, 250));
+                updateDialog.setSize(new Dimension(350, 300));
                 updateDialog.setVisible(true);
             }
         });
@@ -574,6 +636,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton cancelButton2;
     private javax.swing.JButton cancelButton3;
     private javax.swing.JButton createButton;
+    private javax.swing.JComboBox<String> createComboBox;
     private javax.swing.JDialog createDialog;
     private javax.swing.JButton deleteButton;
     private javax.swing.JDialog deleteDialog;
@@ -584,6 +647,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField idField1;
     private javax.swing.JTextField idField2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -591,6 +655,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField lastNameField;
@@ -601,6 +666,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton okButton1;
     private javax.swing.JButton okButton2;
     private javax.swing.JButton okButton3;
+    private javax.swing.JComboBox<String> updateComboBox;
     private javax.swing.JDialog updateDialog;
     // End of variables declaration//GEN-END:variables
 }

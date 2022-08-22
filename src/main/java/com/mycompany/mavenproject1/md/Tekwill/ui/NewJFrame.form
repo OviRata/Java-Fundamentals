@@ -8,11 +8,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="cancelButton" min="-2" pref="95" max="-2" attributes="0"/>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="61" max="32767" attributes="0"/>
                   <Component id="okButton" min="-2" pref="99" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
@@ -20,12 +20,14 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lastNameField" min="-2" pref="108" max="-2" attributes="0"/>
-                      <Component id="idField" min="-2" pref="108" max="-2" attributes="0"/>
-                      <Component id="nameField" min="-2" pref="108" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="lastNameField" pref="108" max="32767" attributes="0"/>
+                      <Component id="idField" pref="108" max="32767" attributes="0"/>
+                      <Component id="nameField" pref="108" max="32767" attributes="0"/>
+                      <Component id="updateComboBox" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -39,7 +41,7 @@
                       <Component id="idField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="11" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="nameField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -49,12 +51,17 @@
                       <Component id="lastNameField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="updateComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cancelButton" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="okButton" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -73,7 +80,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){&#xa;           if( ! isNumeric(idField.getText()) ){&#xa;                updateDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;           int id =Integer.valueOf( idField.getText() );&#xa;           String name = nameField.getText();&#xa;           String lastName=lastNameField.getText();&#xa;           &#xa;           //Employee employee = new Employee(name, lastName);&#xa;           if(employeeService.update(id, name, lastName)){&#xa;                tableUpdate(id, name, lastName);&#xa;            }&#xa;           //newTableModel();&#xa;           &#xa;&#xa;           updateDialog.setVisible(false);&#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){&#xa;           if( ! isNumeric(idField.getText()) ){&#xa;                updateDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;           int id =Integer.valueOf( idField.getText() );&#xa;           String name = nameField.getText();&#xa;           String lastName=lastNameField.getText();&#xa;           String dep = (String) createComboBox.getSelectedItem();&#xa;           /*Department department;&#xa;           for(int i=0; i&lt;departmentsArr.length; i++){&#xa;            if(departmentsArr[i].getName()==dep){&#xa;                department = departmentsArr[i];&#xa;                break;&#xa;            }&#xa;            }*/&#xa;&#xa;&#xa;           //Employee employee = new Employee(name, lastName);&#xa;           if(employeeService.update(id, name, lastName, dep)){&#xa;                tableUpdate(id, name, lastName, dep);&#xa;            }&#xa;           //newTableModel();&#xa;           &#xa;&#xa;           updateDialog.setVisible(false);&#xa;}  &#xa;});"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="idField">
@@ -97,6 +104,27 @@
         </Component>
         <Component class="javax.swing.JTextField" name="nameField">
         </Component>
+        <Component class="javax.swing.JComboBox" name="updateComboBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="String[] departmentsString = new String[departmentsArr.length ] ;&#xa;for(int i=0; i&lt;departmentsArr.length; i++){&#xa;    &#xa;    departmentsString[i] = departmentsArr[i].getName();&#xa;    &#xa;}&#xa;updateComboBox.setModel( new javax.swing.DefaultComboBoxModel&lt;&gt; (departmentsString) );"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel10">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Department:"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="createDialog">
@@ -116,11 +144,13 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lastNameField1" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                      <Component id="nameField1" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="lastNameField1" alignment="0" pref="108" max="32767" attributes="0"/>
+                      <Component id="nameField1" alignment="0" pref="108" max="32767" attributes="0"/>
+                      <Component id="createComboBox" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -129,7 +159,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="44" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="nameField1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -139,7 +169,12 @@
                       <Component id="lastNameField1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="createComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cancelButton1" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="okButton1" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
@@ -163,7 +198,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton1.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           String name = nameField1.getText();&#xa;           String lastName = lastNameField1.getText();&#xa;           &#xa;           Employee employee = new Employee(name, lastName);&#xa;           if(employeeService.create(employee)){&#xa;            tableCreate(employee);&#xa;            }&#xa;           &#xa;           //newTableModel();&#xa;           &#xa;           createDialog.setVisible(false);&#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton1.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           String name = nameField1.getText();&#xa;           String lastName = lastNameField1.getText();&#xa;           String dep = (String)createComboBox.getSelectedItem();&#xa;           if(name.length()==0 || lastName.length()==0 ){&#xa;                createDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;           Employee employee = new Employee(name, lastName);&#xa;           &#xa;           for(int i=0; i&lt;departmentsArr.length; i++){&#xa;                if(departmentsArr[i].getName()==dep){&#xa;                    employee.setDepartment(departmentsArr[i]);&#xa;                    break;&#xa;                }&#xa;            }&#xa;&#xa;           if(employeeService.create(employee)){&#xa;            tableCreate(employee);&#xa;            }&#xa;           &#xa;           //newTableModel();&#xa;           &#xa;           createDialog.setVisible(false);&#xa;}  &#xa;});"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="nameField1">
@@ -179,6 +214,27 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="lastNameField1">
+        </Component>
+        <Component class="javax.swing.JComboBox" name="createComboBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="/*String[] departmentsString = new String[departmentsArr.length ] ;&#xa;for(int i=0; i&lt;departmentsArr.length; i++){&#xa;    &#xa;    departmentsString[i] = departmentsArr[i].getName();&#xa;    &#xa;}*/&#xa;createComboBox.setModel( new javax.swing.DefaultComboBoxModel&lt;&gt; (departmentsString) );"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel9">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Department:"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -235,7 +291,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton2.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;            &#xa;            if( ! isNumeric(idField1.getText() ) ){&#xa;                findDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;&#xa;           int id = parseInt(idField1.getText() );&#xa;           Employee employee = employeeService.read(id);&#xa;           if(employee != null){&#xa;                String name=employee.getName();&#xa;                String lastName = employee.getLastName();&#xa;                JOptionPane.showMessageDialog(null, &quot;The employee with the specified id is:\n\tID: &quot;+id+&quot;\n\tName: &quot;+name+&quot;\n\tLast Name: &quot;+lastName);&#xa;           }&#xa;            else{&#xa;               JOptionPane.showMessageDialog(null, &quot;The employee with the specified id hasn&apos;t been found...&quot;); &#xa;            }&#xa;&#xa;&#xa;           findDialog.setVisible(false);&#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton2.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;            &#xa;            if( ! isNumeric(idField1.getText() ) ){&#xa;                findDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;&#xa;           int id = parseInt(idField1.getText() );&#xa;           Employee employee = employeeService.read(id);&#xa;           if(employee != null){&#xa;                String name=employee.getName();&#xa;                String lastName = employee.getLastName();&#xa;                String dep = employee.getDepartment().getName();&#xa;                JOptionPane.showMessageDialog(null, &quot;The employee with the specified id is:\n\tID: &quot;+id+&quot;\n\tName: &quot;+name+&quot;\n\tLast Name: &quot;+lastName+&quot;\n\tDepartment: &quot;+dep);&#xa;           }&#xa;            else{&#xa;               JOptionPane.showMessageDialog(null, &quot;The employee with the specified id hasn&apos;t been found...&quot;); &#xa;            }&#xa;&#xa;&#xa;           findDialog.setVisible(false);&#xa;}  &#xa;});"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="idField1">
@@ -433,7 +489,7 @@
         <Property name="text" type="java.lang.String" value="Create"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="createButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           createDialog.setModal(true);&#xa;           &#xa;           nameField1.setText(&quot;&quot;);&#xa;           lastNameField1.setText(&quot;&quot;);&#xa;&#xa;           createDialog.setSize(new Dimension(300, 200));&#xa;           createDialog.setVisible(true);&#xa;           //...&#xa;}  &#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="createButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           createDialog.setModal(true);&#xa;           &#xa;           nameField1.setText(&quot;&quot;);&#xa;           lastNameField1.setText(&quot;&quot;);&#xa;&#xa;           createDialog.setSize(new Dimension(350, 300));&#xa;           createDialog.setVisible(true);&#xa;           //...&#xa;}  &#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="findButton">
@@ -452,7 +508,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="editButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           updateDialog.setModal(true);&#xa;           &#xa;           idField.setText(&quot;&quot;);&#xa;           lastNameField.setText(&quot;&quot;);&#xa;           nameField.setText(&quot;&quot;);&#xa;&#xa;           updateDialog.setSize(new Dimension(300, 250));&#xa;           updateDialog.setVisible(true);&#xa;}  &#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="editButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           updateDialog.setModal(true);&#xa;           &#xa;           idField.setText(&quot;&quot;);&#xa;           lastNameField.setText(&quot;&quot;);&#xa;           nameField.setText(&quot;&quot;);&#xa;&#xa;           updateDialog.setSize(new Dimension(350, 300));&#xa;           updateDialog.setVisible(true);&#xa;}  &#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="deleteButton">

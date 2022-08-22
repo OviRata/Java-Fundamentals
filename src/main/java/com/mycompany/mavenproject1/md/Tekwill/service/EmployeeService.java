@@ -2,6 +2,8 @@ package md.Tekwill.service;
 
 import md.Tekwill.domain.Employee;
 import md.Tekwill.dao.EmployeeDao;
+import md.Tekwill.domain.Department;
+
 
 public class EmployeeService {
     private EmployeeDao employeeDao= new EmployeeDao();
@@ -30,10 +32,10 @@ public class EmployeeService {
         return employee;
     }
 
-    public boolean update(int id, String name, String lastName){
+    public boolean update(int id, String name, String lastName, String dep){
         if( (name.length()>0)
         && lastName.length()>0 ){
-            employeeDao.update(id, name, lastName);
+            employeeDao.update(id, name, lastName, dep);
             return true;
         }
         else{
@@ -56,6 +58,14 @@ public class EmployeeService {
                }
             }
         System.out.println();
+    }
+    
+    public Employee[] getArr(){
+        return employeeDao.getAll();
+    }
+    
+    public Department[] getDepartments(){
+        return employeeDao.getDepartments();
     }
 
 }
