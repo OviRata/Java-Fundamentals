@@ -1,7 +1,7 @@
-package md.Tekwill.ui;
+package com.mycompany.mavenproject1.md.Tekwill.ui;
 
-import md.Tekwill.domain.Employee;
-import md.Tekwill.service.EmployeeService;
+import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
+import com.mycompany.mavenproject1.md.Tekwill.service.EmployeeService;
 
 public class TestEmployee {
     public static void main(String[] args){
@@ -17,8 +17,8 @@ public class TestEmployee {
 
         employeeService.read(2);
 
-        Employee updatedEmployee= new Employee("Eugen", "Radu");
-        employeeService.update(1, updatedEmployee);
+        //Employee updatedEmployee= new Employee("Eugen", "Radu");
+        //employeeService.update(1, updatedEmployee);
 
         employeeService.listEmployees();
 

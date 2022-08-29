@@ -9,13 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static java.lang.Integer.parseInt;
 import javax.swing.JOptionPane;
-import md.Tekwill.dao.EmployeeDao;
+import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDao;
 import javax.swing.table.DefaultTableModel;
-import md.Tekwill.domain.Department;
+import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
 
 
-import md.Tekwill.service.EmployeeService;
-import md.Tekwill.domain.Employee;
+import com.mycompany.mavenproject1.md.Tekwill.service.EmployeeService;
+import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
 
 
 /**
@@ -224,7 +224,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 int id =Integer.valueOf( idField.getText() );
                 String name = nameField.getText();
                 String lastName=lastNameField.getText();
-                String dep = (String) createComboBox.getSelectedItem();
+                String dep = (String) updateComboBox.getSelectedItem();
                 /*Department department;
                 for(int i=0; i<departmentsArr.length; i++){
                     if(departmentsArr[i].getName()==dep){

@@ -1,4 +1,4 @@
-package md.Tekwill.domain;
+package com.mycompany.mavenproject1.md.Tekwill.domain;
 
 public class Employee {
     private int id;

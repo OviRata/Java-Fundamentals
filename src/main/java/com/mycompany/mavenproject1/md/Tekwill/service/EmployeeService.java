@@ -1,12 +1,12 @@
-package md.Tekwill.service;
+package com.mycompany.mavenproject1.md.Tekwill.service;
 
-import md.Tekwill.domain.Employee;
-import md.Tekwill.dao.EmployeeDao;
-import md.Tekwill.domain.Department;
+import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
+import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDaoHashSetImpl;
+import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
 
 
 public class EmployeeService {
-    private EmployeeDao employeeDao= new EmployeeDao();
+    private EmployeeDaoHashSetImpl employeeDao= new EmployeeDaoHashSetImpl();
 
     public boolean create(Employee employee){
         if(employee.getName().length()>0
