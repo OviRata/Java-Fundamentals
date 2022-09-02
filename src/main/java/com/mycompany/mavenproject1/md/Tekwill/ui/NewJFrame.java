@@ -12,10 +12,14 @@ import javax.swing.JOptionPane;
 import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDao;
 import javax.swing.table.DefaultTableModel;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
-
+import com.mycompany.mavenproject1.md.Tekwill.exceptions.EmployeeException;
+import com.mycompany.mavenproject1.md.Tekwill.exceptions.EmployeeExceptionChecker;
 
 import com.mycompany.mavenproject1.md.Tekwill.service.EmployeeService;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.SwingUtilities;
 
 
 /**
@@ -103,6 +107,8 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     
     
+    int popUpRow = -1;
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -137,6 +143,13 @@ public class NewJFrame extends javax.swing.JFrame {
         okButton3 = new javax.swing.JButton();
         idField2 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        EmployeeExceptionDialog = new javax.swing.JDialog();
+        EmployeeExceptionOKButton = new javax.swing.JToggleButton();
+        EmployeeExceptionText = new javax.swing.JLabel();
+        TablePopUpMenu = new javax.swing.JPopupMenu();
+        Info = new javax.swing.JMenuItem();
+        Update = new javax.swing.JMenuItem();
+        Delete = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -225,21 +238,24 @@ public class NewJFrame extends javax.swing.JFrame {
                 String name = nameField.getText();
                 String lastName=lastNameField.getText();
                 String dep = (String) updateComboBox.getSelectedItem();
-                /*Department department;
-                for(int i=0; i<departmentsArr.length; i++){
-                    if(departmentsArr[i].getName()==dep){
-                        department = departmentsArr[i];
-                        break;
+
+                try{
+                    EmployeeExceptionChecker.checkInfo(name, lastName);
+                    if(employeeService.update(id, name, lastName, dep)){
+                        tableUpdate(id, name, lastName, dep);
                     }
-                }*/
+                    //newTableModel();
+                    updateDialog.setVisible(false);
+                }
+                catch(EmployeeException exception){
+                    EmployeeExceptionDialog.setModal(true);
+                    EmployeeExceptionDialog.setSize(280, 180);
+                    EmployeeExceptionText.setText(exception.getMessage());
+                    EmployeeExceptionDialog.setVisible(true);
+                }
 
                 //Employee employee = new Employee(name, lastName);
-                if(employeeService.update(id, name, lastName, dep)){
-                    tableUpdate(id, name, lastName, dep);
-                }
-                //newTableModel();
 
-                updateDialog.setVisible(false);
             }
         });
         String[] departmentsString = new String[departmentsArr.length ] ;
@@ -317,26 +333,33 @@ public class NewJFrame extends javax.swing.JFrame {
                 String name = nameField1.getText();
                 String lastName = lastNameField1.getText();
                 String dep = (String)createComboBox.getSelectedItem();
-                if(name.length()==0 || lastName.length()==0 ){
-                    createDialog.setVisible(false);
-                    return;
-                }
-                Employee employee = new Employee(name, lastName);
 
-                for(int i=0; i<departmentsArr.length; i++){
-                    if(departmentsArr[i].getName()==dep){
-                        employee.setDepartment(departmentsArr[i]);
-                        break;
+                try{
+                    EmployeeExceptionChecker.checkInfo(name, lastName);
+                    Employee employee = new Employee(name, lastName);
+
+                    for(int i=0; i<departmentsArr.length; i++){
+                        if(departmentsArr[i].getName()==dep){
+                            employee.setDepartment(departmentsArr[i]);
+                            break;
+                        }
                     }
+
+                    if(employeeService.create(employee)){
+                        tableCreate(employee);
+                    }
+
+                    //newTableModel();
+
+                    createDialog.setVisible(false);
+                }
+                catch(EmployeeException exception){
+                    EmployeeExceptionDialog.setModal(true);
+                    EmployeeExceptionDialog.setSize(280, 180);
+                    EmployeeExceptionText.setText(exception.getMessage());
+                    EmployeeExceptionDialog.setVisible(true);
                 }
 
-                if(employeeService.create(employee)){
-                    tableCreate(employee);
-                }
-
-                //newTableModel();
-
-                createDialog.setVisible(false);
             }
         });
         /*String[] departmentsString = new String[departmentsArr.length ] ;
@@ -473,6 +496,110 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        EmployeeExceptionOKButton.setText("OK");
+
+        EmployeeExceptionText.setText("jLabel11");
+
+        javax.swing.GroupLayout EmployeeExceptionDialogLayout = new javax.swing.GroupLayout(EmployeeExceptionDialog.getContentPane());
+        EmployeeExceptionDialog.getContentPane().setLayout(EmployeeExceptionDialogLayout);
+        EmployeeExceptionDialogLayout.setHorizontalGroup(
+            EmployeeExceptionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EmployeeExceptionDialogLayout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addComponent(EmployeeExceptionOKButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(EmployeeExceptionDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(EmployeeExceptionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        EmployeeExceptionDialogLayout.setVerticalGroup(
+            EmployeeExceptionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EmployeeExceptionDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(EmployeeExceptionText, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(EmployeeExceptionOKButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        EmployeeExceptionOKButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                EmployeeExceptionDialog.setVisible(false);
+            }
+        });
+
+        Info.setText("jMenuItem1");
+        TablePopUpMenu.add(Info);
+        Info.setText("Info");
+        int InfoRow = -1;
+        //Update.setText("Update");
+        Info.addActionListener( new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //int x = TablePopUpMenu.getLocation().x;
+                //int y = TablePopUpMenu.getLocation().y;
+                //int row = jTable1.rowAtPoint( TablePopUpMenu.getLocation() );
+                int row=popUpRow;
+                String id = jTable1.getValueAt(row, 0).toString();
+
+                findDialog.setModal(true);
+
+                idField1.setText(id);
+                okButton2.doClick();
+                //deleteDialog.setSize(new Dimension(300, 200));
+                //deleteDialog.setVisible(true);
+            }
+        }  );
+
+        Update.setText("jMenuItem1");
+        TablePopUpMenu.add(Update);
+        Update.setText("Update");
+        int UpdateRow = -1;
+        Update.addActionListener( new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //int x = TablePopUpMenu.getLocation().x;
+                //int y = TablePopUpMenu.getLocation().y;
+                //int row = jTable1.rowAtPoint( TablePopUpMenu.getLocation() );
+                int row = popUpRow;
+                String id = jTable1.getValueAt(row, 0).toString();
+                updateDialog.setModal(true);
+
+                idField.setText(id);
+                lastNameField.setText("");
+                nameField.setText("");
+
+                updateDialog.setSize(new Dimension(350, 300));
+                updateDialog.setVisible(true);
+            }
+        }  );
+
+        Delete.setText("jMenuItem1");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
+        TablePopUpMenu.add(Delete);
+        Delete.setText("Delete");
+        //Update.setText("Update");
+        int DeleteRow = -1;
+        Delete.addActionListener( new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                //int x = TablePopUpMenu.getLocation().x;
+                //int y = TablePopUpMenu.getLocation().y;
+                //int row = jTable1.rowAtPoint( TablePopUpMenu.getLocation() );
+                int row = popUpRow;
+                String id = jTable1.getValueAt(row, 0).toString();
+
+                deleteDialog.setModal(true);
+
+                idField2.setText(id);
+                okButton3.doClick();
+                //deleteDialog.setSize(new Dimension(300, 200));
+                //deleteDialog.setVisible(true);
+            }
+        }  );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -488,6 +615,17 @@ public class NewJFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
         jTable1.setModel(model);
+        jTable1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent me){
+                if(SwingUtilities.isRightMouseButton(me)){
+                    int row = jTable1.rowAtPoint(me.getPoint() );
+                    popUpRow = row;
+                    TablePopUpMenu.show(jTable1, me.getX(), me.getY());
+
+                }
+            }
+
+        });
 
         createButton.setText("Create");
 
@@ -595,6 +733,10 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_editButtonActionPerformed
 
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -631,6 +773,13 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Delete;
+    private javax.swing.JDialog EmployeeExceptionDialog;
+    private javax.swing.JToggleButton EmployeeExceptionOKButton;
+    private javax.swing.JLabel EmployeeExceptionText;
+    private javax.swing.JMenuItem Info;
+    private javax.swing.JPopupMenu TablePopUpMenu;
+    private javax.swing.JMenuItem Update;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton cancelButton1;
     private javax.swing.JButton cancelButton2;
