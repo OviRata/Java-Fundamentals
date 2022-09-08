@@ -448,6 +448,180 @@
         </MenuItem>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JDialog" name="filterDialog">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="filterNameLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="filterLastNameLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="filterLastNameLabel1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="filterNameField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="filterLastNameField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="filterComboBox" alignment="0" pref="92" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="filterApplyButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="191" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="filterNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="filterNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="filterLastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="filterLastNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="filterLastNameLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="filterComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="filterApplyButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="152" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="filterNameLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Name:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="filterNameField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="filterLastNameLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Last Name:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="filterLastNameField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="filterLastNameLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Department:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="filterComboBox">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="String[] comboBoxDepartmentsItems = new String [departmentsArr.length+1];&#xa;&#xa;for(int i = 0; i&lt;departmentsArr.length; i++){&#xa;    comboBoxDepartmentsItems[i] = departmentsArr[i].getName();&#xa;}&#xa;comboBoxDepartmentsItems[ comboBoxDepartmentsItems.length-1 ] = &quot;Any Department&quot;;&#xa;javax.swing.DefaultComboBoxModel comboBoxModel = new javax.swing.DefaultComboBoxModel&lt;&gt;( comboBoxDepartmentsItems );&#xa;filterComboBox.setModel(comboBoxModel);"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="filterApplyButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Apply"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterApplyButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){&#xa;       &#xa;        String name = filterNameField.getText();&#xa;        String lastName = filterLastNameField.getText();&#xa;        String departmentName =  filterComboBox.getSelectedItem().toString();&#xa;        &#xa;        System.out.println(name);&#xa;        System.out.println(lastName);&#xa;        System.out.println(departmentName);&#xa;&#xa;        ArrayList&lt;Employee&gt; filteredEmployeesArray  =&#xa;          new ArrayList&lt;Employee&gt;(&#xa;                employeeService.getList().stream().filter(&#xa;                (Employee employee)-&gt;{&#xa;                    return (( (name.equals(employee.getName()) ) || (name.equals(&quot;&quot;) ) )&#xa;                    &amp;&amp; ( ( lastName.equals(employee.getLastName()) ) || (lastName.equals(&quot;&quot;) ))&#xa;                    &amp;&amp; ( ( departmentName.equals(employee.getDepartment().getName()) ) || (departmentName.equals(&quot;Any Department&quot;) )  ));&#xa;                }&#xa;            ).collect(Collectors.toList() )&#xa;        );&#xa;&#xa;        &#xa;        System.out.println(filteredEmployeesArray.size());&#xa;        &#xa;        &#xa;        filterResultsTableModel.setRowCount(0);&#xa;        &#xa;        for(int i=0; i&lt;filteredEmployeesArray.size(); i++){&#xa;            Employee employee = filteredEmployeesArray.get(i);&#xa;            filterResultsTableModel.addRow( new Object[]{&#xa;                employee.getId(),&#xa;                employee.getName(),&#xa;                employee.getLastName(),&#xa;                employee.getDepartment().getName(),&#xa;            } );&#xa;        }&#xa;        &#xa;        &#xa;        filterResultsDialog.setModal(true);&#xa;        filterResultsDialog.setSize(440, 300);&#xa;        &#xa;        filterResultsDialog.setVisible(true);&#xa;        //filterDialog.setVisible(false);&#xa;&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="filterResultsDialog">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" min="-2" pref="393" max="-2" attributes="0"/>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" min="-2" pref="163" max="-2" attributes="0"/>
+                  <EmptySpace pref="98" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="filterResultsTable">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="4" rowCount="4">
+                    <Column editable="true" title="ID" type="java.lang.Object"/>
+                    <Column editable="true" title="Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Last Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Department" type="java.lang.Object"/>
+                  </Table>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="filterResultsTableModel = new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {null, null, null, null},&#xa;        {null, null, null, null},&#xa;        {null, null, null, null},&#xa;        {null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;ID&quot;, &quot;Name&quot;, &quot;Last Name&quot;, &quot;Department&quot;&#xa;    }&#xa;);&#xa;&#xa;filterResultsTable.setModel(filterResultsTableModel);">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -473,12 +647,6 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="426" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="createButton" min="-2" max="-2" attributes="0"/>
@@ -488,6 +656,16 @@
                       <Component id="findButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="426" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="filterButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -514,7 +692,9 @@
                       <Component id="jScrollPane1" min="-2" pref="161" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="76" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="filterButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -597,6 +777,17 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="deleteButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           deleteDialog.setModal(true);&#xa;           &#xa;           idField2.setText(&quot;&quot;);&#xa;&#xa;           deleteDialog.setSize(new Dimension(300, 200));&#xa;           deleteDialog.setVisible(true);&#xa;}  &#xa;});"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="filterButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Filter"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterButtonActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;          filterDialog.setModal(true);&#xa;          &#xa;          filterNameField.setText(&quot;&quot;);&#xa;          filterLastNameField.setText(&quot;&quot;);&#xa;          filterComboBox.setSelectedItem(&quot;Any Department&quot;);&#xa;&#xa;          filterDialog.setSize(300, 220);&#xa;          filterDialog.setVisible(true);&#xa;}  &#xa;});"/>
       </AuxValues>
     </Component>
   </SubComponents>

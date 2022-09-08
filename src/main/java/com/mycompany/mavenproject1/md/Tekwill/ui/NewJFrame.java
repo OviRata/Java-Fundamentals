@@ -19,6 +19,8 @@ import com.mycompany.mavenproject1.md.Tekwill.service.EmployeeService;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import javax.swing.SwingUtilities;
 
 
@@ -65,7 +67,21 @@ public class NewJFrame extends javax.swing.JFrame {
         "ID", "Name", "Last Name", "Department"
     }
 );
-    
+   
+   javax.swing.table.DefaultTableModel filterResultsTableModel = new javax.swing.table.DefaultTableModel(
+    new Object [][] {
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null}
+    },
+    new String [] {
+        "ID", "Name", "Last Name", "Department"
+    }
+);
+
+   
+   
     void newTableModel(){
         
         Employee[] employees = employeeService.getArr();
@@ -150,6 +166,17 @@ public class NewJFrame extends javax.swing.JFrame {
         Info = new javax.swing.JMenuItem();
         Update = new javax.swing.JMenuItem();
         Delete = new javax.swing.JMenuItem();
+        filterDialog = new javax.swing.JDialog();
+        filterNameLabel = new javax.swing.JLabel();
+        filterNameField = new javax.swing.JTextField();
+        filterLastNameLabel = new javax.swing.JLabel();
+        filterLastNameField = new javax.swing.JTextField();
+        filterLastNameLabel1 = new javax.swing.JLabel();
+        filterComboBox = new javax.swing.JComboBox<>();
+        filterApplyButton = new javax.swing.JButton();
+        filterResultsDialog = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        filterResultsTable = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -157,6 +184,7 @@ public class NewJFrame extends javax.swing.JFrame {
         findButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        filterButton = new javax.swing.JButton();
 
         cancelButton.setText("Cancel");
 
@@ -600,6 +628,154 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         }  );
 
+        filterNameLabel.setText("Name:");
+
+        filterLastNameLabel.setText("Last Name:");
+
+        filterLastNameLabel1.setText("Department:");
+
+        filterComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        filterApplyButton.setText("Apply");
+
+        javax.swing.GroupLayout filterDialogLayout = new javax.swing.GroupLayout(filterDialog.getContentPane());
+        filterDialog.getContentPane().setLayout(filterDialogLayout);
+        filterDialogLayout.setHorizontalGroup(
+            filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(filterDialogLayout.createSequentialGroup()
+                .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(filterDialogLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(filterNameLabel)
+                            .addComponent(filterLastNameLabel)
+                            .addComponent(filterLastNameLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(filterNameField)
+                            .addComponent(filterLastNameField)
+                            .addComponent(filterComboBox, 0, 92, Short.MAX_VALUE)))
+                    .addGroup(filterDialogLayout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(filterApplyButton)))
+                .addContainerGap(191, Short.MAX_VALUE))
+        );
+        filterDialogLayout.setVerticalGroup(
+            filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(filterDialogLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterNameLabel)
+                    .addComponent(filterNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterLastNameLabel)
+                    .addComponent(filterLastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterLastNameLabel1)
+                    .addComponent(filterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(filterApplyButton)
+                .addContainerGap(152, Short.MAX_VALUE))
+        );
+
+        String[] comboBoxDepartmentsItems = new String [departmentsArr.length+1];
+
+        for(int i = 0; i<departmentsArr.length; i++){
+            comboBoxDepartmentsItems[i] = departmentsArr[i].getName();
+        }
+        comboBoxDepartmentsItems[ comboBoxDepartmentsItems.length-1 ] = "Any Department";
+        javax.swing.DefaultComboBoxModel comboBoxModel = new javax.swing.DefaultComboBoxModel<>( comboBoxDepartmentsItems );
+        filterComboBox.setModel(comboBoxModel);
+        filterApplyButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+
+                String name = filterNameField.getText();
+                String lastName = filterLastNameField.getText();
+                String departmentName =  filterComboBox.getSelectedItem().toString();
+
+                System.out.println(name);
+                System.out.println(lastName);
+                System.out.println(departmentName);
+
+                ArrayList<Employee> filteredEmployeesArray  =
+                new ArrayList<Employee>(
+                    employeeService.getList().stream().filter(
+                        (Employee employee)->{
+                            return (( (name.equals(employee.getName()) ) || (name.equals("") ) )
+                                && ( ( lastName.equals(employee.getLastName()) ) || (lastName.equals("") ))
+                                && ( ( departmentName.equals(employee.getDepartment().getName()) ) || (departmentName.equals("Any Department") )  ));
+                        }
+                    ).collect(Collectors.toList() )
+                );
+
+                System.out.println(filteredEmployeesArray.size());
+
+                filterResultsTableModel.setRowCount(0);
+
+                for(int i=0; i<filteredEmployeesArray.size(); i++){
+                    Employee employee = filteredEmployeesArray.get(i);
+                    filterResultsTableModel.addRow( new Object[]{
+                        employee.getId(),
+                        employee.getName(),
+                        employee.getLastName(),
+                        employee.getDepartment().getName(),
+                    } );
+                }
+
+                filterResultsDialog.setModal(true);
+                filterResultsDialog.setSize(440, 300);
+
+                filterResultsDialog.setVisible(true);
+                //filterDialog.setVisible(false);
+
+            }
+        });
+
+        filterResultsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Last Name", "Department"
+            }
+        ));
+        jScrollPane2.setViewportView(filterResultsTable);
+        filterResultsTableModel = new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Last Name", "Department"
+            }
+        );
+
+        filterResultsTable.setModel(filterResultsTableModel);
+
+        javax.swing.GroupLayout filterResultsDialogLayout = new javax.swing.GroupLayout(filterResultsDialog.getContentPane());
+        filterResultsDialog.getContentPane().setLayout(filterResultsDialogLayout);
+        filterResultsDialogLayout.setHorizontalGroup(
+            filterResultsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(filterResultsDialogLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        filterResultsDialogLayout.setVerticalGroup(
+            filterResultsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(filterResultsDialogLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(98, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -640,17 +816,19 @@ public class NewJFrame extends javax.swing.JFrame {
 
         deleteButton.setText("Delete");
 
+        filterButton.setText("Filter");
+        filterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(createButton)
@@ -659,7 +837,15 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(findButton)
                         .addGap(38, 38, 38)
-                        .addComponent(deleteButton)))
+                        .addComponent(deleteButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(filterButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -678,7 +864,9 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(filterButton)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         createButton.addActionListener(new ActionListener(){
@@ -725,6 +913,18 @@ public class NewJFrame extends javax.swing.JFrame {
                 deleteDialog.setVisible(true);
             }
         });
+        filterButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                filterDialog.setModal(true);
+
+                filterNameField.setText("");
+                filterLastNameField.setText("");
+                filterComboBox.setSelectedItem("Any Department");
+
+                filterDialog.setSize(300, 220);
+                filterDialog.setVisible(true);
+            }
+        });
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -736,6 +936,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DeleteActionPerformed
+
+    private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_filterButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -790,6 +994,17 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteButton;
     private javax.swing.JDialog deleteDialog;
     private javax.swing.JButton editButton;
+    private javax.swing.JButton filterApplyButton;
+    private javax.swing.JButton filterButton;
+    private javax.swing.JComboBox<String> filterComboBox;
+    private javax.swing.JDialog filterDialog;
+    private javax.swing.JTextField filterLastNameField;
+    private javax.swing.JLabel filterLastNameLabel;
+    private javax.swing.JLabel filterLastNameLabel1;
+    private javax.swing.JTextField filterNameField;
+    private javax.swing.JLabel filterNameLabel;
+    private javax.swing.JDialog filterResultsDialog;
+    private javax.swing.JTable filterResultsTable;
     private javax.swing.JButton findButton;
     private javax.swing.JDialog findDialog;
     private javax.swing.JTextField idField;
@@ -806,6 +1021,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JTextField lastNameField1;

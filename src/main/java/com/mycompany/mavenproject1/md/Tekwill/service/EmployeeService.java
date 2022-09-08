@@ -1,12 +1,15 @@
 package com.mycompany.mavenproject1.md.Tekwill.service;
 
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
-import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDaoHashSetImpl;
+import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDaoHashMap;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class EmployeeService {
-    private EmployeeDaoHashSetImpl employeeDao= new EmployeeDaoHashSetImpl();
+    private EmployeeDaoHashMap employeeDao= new EmployeeDaoHashMap();
 
     public boolean create(Employee employee){
         if(employee.getName().length()>0
@@ -62,6 +65,10 @@ public class EmployeeService {
     
     public Employee[] getArr(){
         return employeeDao.getAll();
+    }
+    
+    public List<Employee> getList(){
+        return Arrays.asList(getArr() );
     }
     
     public Department[] getDepartments(){
