@@ -461,16 +461,18 @@
                               <Component id="filterNameLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="filterLastNameLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="filterLastNameLabel1" min="-2" max="-2" attributes="0"/>
+                              <Component id="filterLastNameLabel2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="filterNameField" alignment="0" max="32767" attributes="0"/>
                               <Component id="filterLastNameField" alignment="0" max="32767" attributes="0"/>
                               <Component id="filterComboBox" alignment="0" pref="92" max="32767" attributes="0"/>
+                              <Component id="filterComboBoxSort" alignment="0" pref="92" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                           <Component id="filterApplyButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -496,9 +498,14 @@
                       <Component id="filterLastNameLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="filterComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="filterLastNameLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="filterComboBoxSort" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="filterApplyButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="152" max="32767" attributes="0"/>
+                  <EmptySpace pref="116" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -544,7 +551,28 @@
             <Property name="text" type="java.lang.String" value="Apply"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterApplyButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){&#xa;       &#xa;        String name = filterNameField.getText();&#xa;        String lastName = filterLastNameField.getText();&#xa;        String departmentName =  filterComboBox.getSelectedItem().toString();&#xa;        &#xa;        System.out.println(name);&#xa;        System.out.println(lastName);&#xa;        System.out.println(departmentName);&#xa;&#xa;        ArrayList&lt;Employee&gt; filteredEmployeesArray  =&#xa;          new ArrayList&lt;Employee&gt;(&#xa;                employeeService.getList().stream().filter(&#xa;                (Employee employee)-&gt;{&#xa;                    return (( (name.equals(employee.getName()) ) || (name.equals(&quot;&quot;) ) )&#xa;                    &amp;&amp; ( ( lastName.equals(employee.getLastName()) ) || (lastName.equals(&quot;&quot;) ))&#xa;                    &amp;&amp; ( ( departmentName.equals(employee.getDepartment().getName()) ) || (departmentName.equals(&quot;Any Department&quot;) )  ));&#xa;                }&#xa;            ).collect(Collectors.toList() )&#xa;        );&#xa;&#xa;        &#xa;        System.out.println(filteredEmployeesArray.size());&#xa;        &#xa;        &#xa;        filterResultsTableModel.setRowCount(0);&#xa;        &#xa;        for(int i=0; i&lt;filteredEmployeesArray.size(); i++){&#xa;            Employee employee = filteredEmployeesArray.get(i);&#xa;            filterResultsTableModel.addRow( new Object[]{&#xa;                employee.getId(),&#xa;                employee.getName(),&#xa;                employee.getLastName(),&#xa;                employee.getDepartment().getName(),&#xa;            } );&#xa;        }&#xa;        &#xa;        &#xa;        filterResultsDialog.setModal(true);&#xa;        filterResultsDialog.setSize(440, 300);&#xa;        &#xa;        filterResultsDialog.setVisible(true);&#xa;        //filterDialog.setVisible(false);&#xa;&#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterApplyButton.addActionListener(new ActionListener(){  &#xa;    public void actionPerformed(ActionEvent e){&#xa;       &#xa;        String name = filterNameField.getText();&#xa;        String lastName = filterLastNameField.getText();&#xa;        String departmentName =  filterComboBox.getSelectedItem().toString();&#xa;        String sortBy = filterComboBoxSort.getSelectedItem().toString();&#xa;&#xa;        System.out.println(name);&#xa;        System.out.println(lastName);&#xa;        System.out.println(departmentName);&#xa;&#xa;&#xa;        ArrayList&lt;Employee&gt; filteredEmployeesArray = &#xa;        filterEmployeesArray(name, lastName, departmentName, sortBy);   &#xa;        &#xa;        System.out.println(filteredEmployeesArray.size());&#xa;        &#xa;        &#xa;        filterResultsTableModel.setRowCount(0);&#xa;        &#xa;        for(int i=0; i&lt;filteredEmployeesArray.size(); i++){&#xa;            Employee employee = filteredEmployeesArray.get(i);&#xa;            filterResultsTableModel.addRow( new Object[]{&#xa;                employee.getId(),&#xa;                employee.getName(),&#xa;                employee.getLastName(),&#xa;                employee.getDepartment().getName(),&#xa;            } );&#xa;        }&#xa;        &#xa;        &#xa;        filterResultsDialog.setModal(true);&#xa;        filterResultsDialog.setSize(440, 300);&#xa;        &#xa;        filterResultsDialog.setVisible(true);&#xa;        //filterDialog.setVisible(false);&#xa;&#xa;    }  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="filterLastNameLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sort by:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="filterComboBoxSort">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="String[] comboBoxSortItems = {&quot;Unordered&quot;, &quot;Name&quot;, &quot;Last Name&quot;,  &quot;Name + Last Name&quot;, &quot;ID&quot; };&#xa;javax.swing.DefaultComboBoxModel comboBoxSortModel = new javax.swing.DefaultComboBoxModel&lt;&gt;( comboBoxSortItems );&#xa;&#xa;filterComboBoxSort.setModel( comboBoxSortModel );"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -787,7 +815,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterButtonActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;          filterDialog.setModal(true);&#xa;          &#xa;          filterNameField.setText(&quot;&quot;);&#xa;          filterLastNameField.setText(&quot;&quot;);&#xa;          filterComboBox.setSelectedItem(&quot;Any Department&quot;);&#xa;&#xa;          filterDialog.setSize(300, 220);&#xa;          filterDialog.setVisible(true);&#xa;}  &#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;          filterDialog.setModal(true);&#xa;          &#xa;          filterNameField.setText(&quot;&quot;);&#xa;          filterLastNameField.setText(&quot;&quot;);&#xa;          filterComboBox.setSelectedItem(&quot;Any Department&quot;);&#xa;&#xa;          filterDialog.setSize(300, 260);&#xa;          filterDialog.setVisible(true);&#xa;}  &#xa;});"/>
       </AuxValues>
     </Component>
   </SubComponents>

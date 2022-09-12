@@ -20,9 +20,10 @@ import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import javax.swing.SwingUtilities;
-
+import java.util.Collections;
 
 /**
  *
@@ -125,6 +126,69 @@ public class NewJFrame extends javax.swing.JFrame {
     
     int popUpRow = -1;
     
+    
+    
+    class SortByComparator implements Comparator<Employee>{
+    public String sortBy;
+    
+    SortByComparator(String sortBy){
+        this.sortBy = sortBy;
+    }
+    
+    public int compare(Employee e1, Employee e2){
+        int res=0;
+        switch(sortBy){
+                case "Unordered": 
+                    res=0; break;
+                case "Name + Last Name":
+                    res= 
+                        ( (e1.getName()+" "+e1.getLastName()) ).compareTo(
+                            (e2.getName()+" "+e2.getLastName())
+                        ); break;
+                case "Name":
+                    res= 
+                        ( (e1.getName()) ).compareTo(
+                            (e2.getName())
+                        );break;
+                case "Last Name":
+                    res= 
+                        ( (e1.getLastName()) ).compareTo(
+                            (e2.getLastName())
+                        ); break;
+                case "ID":
+                    res= 
+                        ( (Integer)( e1.getId() ) ).compareTo(
+                            (Integer)(e2.getId())
+                        ); break;
+            }
+        return res;
+    }
+    
+}
+
+
+
+ArrayList<Employee> filterEmployeesArray(String name, String lastName, String departmentName, String sortBy){
+    
+    ArrayList<Employee> results = new ArrayList<Employee>(
+        employeeService.getList().stream().filter(
+            (Employee employee)->{
+                return (( (name.equals(employee.getName()) ) || (name.equals("") ) )
+                && ( ( lastName.equals(employee.getLastName()) ) || (lastName.equals("") ))                 && ( ( departmentName.equals(employee.getDepartment().getName()) ) || (departmentName.equals("Any Department") )  ));
+                }
+        ).sorted( 
+            new SortByComparator(sortBy)
+        ).collect(Collectors.toList() )
+    );
+    
+    
+    return results;
+}
+    
+    
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -174,6 +238,8 @@ public class NewJFrame extends javax.swing.JFrame {
         filterLastNameLabel1 = new javax.swing.JLabel();
         filterComboBox = new javax.swing.JComboBox<>();
         filterApplyButton = new javax.swing.JButton();
+        filterLastNameLabel2 = new javax.swing.JLabel();
+        filterComboBoxSort = new javax.swing.JComboBox<>();
         filterResultsDialog = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         filterResultsTable = new javax.swing.JTable();
@@ -638,6 +704,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         filterApplyButton.setText("Apply");
 
+        filterLastNameLabel2.setText("Sort by:");
+
+        filterComboBoxSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout filterDialogLayout = new javax.swing.GroupLayout(filterDialog.getContentPane());
         filterDialog.getContentPane().setLayout(filterDialogLayout);
         filterDialogLayout.setHorizontalGroup(
@@ -649,14 +719,16 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(filterNameLabel)
                             .addComponent(filterLastNameLabel)
-                            .addComponent(filterLastNameLabel1))
+                            .addComponent(filterLastNameLabel1)
+                            .addComponent(filterLastNameLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(filterNameField)
                             .addComponent(filterLastNameField)
-                            .addComponent(filterComboBox, 0, 92, Short.MAX_VALUE)))
+                            .addComponent(filterComboBox, 0, 92, Short.MAX_VALUE)
+                            .addComponent(filterComboBoxSort, 0, 92, Short.MAX_VALUE)))
                     .addGroup(filterDialogLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
+                        .addGap(74, 74, 74)
                         .addComponent(filterApplyButton)))
                 .addContainerGap(191, Short.MAX_VALUE))
         );
@@ -675,9 +747,13 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filterLastNameLabel1)
                     .addComponent(filterComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(filterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterLastNameLabel2)
+                    .addComponent(filterComboBoxSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(filterApplyButton)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         String[] comboBoxDepartmentsItems = new String [departmentsArr.length+1];
@@ -694,21 +770,14 @@ public class NewJFrame extends javax.swing.JFrame {
                 String name = filterNameField.getText();
                 String lastName = filterLastNameField.getText();
                 String departmentName =  filterComboBox.getSelectedItem().toString();
+                String sortBy = filterComboBoxSort.getSelectedItem().toString();
 
                 System.out.println(name);
                 System.out.println(lastName);
                 System.out.println(departmentName);
 
-                ArrayList<Employee> filteredEmployeesArray  =
-                new ArrayList<Employee>(
-                    employeeService.getList().stream().filter(
-                        (Employee employee)->{
-                            return (( (name.equals(employee.getName()) ) || (name.equals("") ) )
-                                && ( ( lastName.equals(employee.getLastName()) ) || (lastName.equals("") ))
-                                && ( ( departmentName.equals(employee.getDepartment().getName()) ) || (departmentName.equals("Any Department") )  ));
-                        }
-                    ).collect(Collectors.toList() )
-                );
+                ArrayList<Employee> filteredEmployeesArray =
+                filterEmployeesArray(name, lastName, departmentName, sortBy);
 
                 System.out.println(filteredEmployeesArray.size());
 
@@ -732,6 +801,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
             }
         });
+        String[] comboBoxSortItems = {"Unordered", "Name", "Last Name",  "Name + Last Name", "ID" };
+        javax.swing.DefaultComboBoxModel comboBoxSortModel = new javax.swing.DefaultComboBoxModel<>( comboBoxSortItems );
+
+        filterComboBoxSort.setModel( comboBoxSortModel );
 
         filterResultsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -921,7 +994,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 filterLastNameField.setText("");
                 filterComboBox.setSelectedItem("Any Department");
 
-                filterDialog.setSize(300, 220);
+                filterDialog.setSize(300, 260);
                 filterDialog.setVisible(true);
             }
         });
@@ -997,10 +1070,12 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton filterApplyButton;
     private javax.swing.JButton filterButton;
     private javax.swing.JComboBox<String> filterComboBox;
+    private javax.swing.JComboBox<String> filterComboBoxSort;
     private javax.swing.JDialog filterDialog;
     private javax.swing.JTextField filterLastNameField;
     private javax.swing.JLabel filterLastNameLabel;
     private javax.swing.JLabel filterLastNameLabel1;
+    private javax.swing.JLabel filterLastNameLabel2;
     private javax.swing.JTextField filterNameField;
     private javax.swing.JLabel filterNameLabel;
     private javax.swing.JDialog filterResultsDialog;
