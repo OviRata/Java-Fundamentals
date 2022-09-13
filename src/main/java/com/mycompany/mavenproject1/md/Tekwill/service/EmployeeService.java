@@ -6,6 +6,7 @@ import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 public class EmployeeService {
@@ -22,17 +23,11 @@ public class EmployeeService {
     }
 
     public Employee read(int employeeId){
-        Employee employee= employeeDao.read(employeeId);
-        if(employee==null){
-            System.out.println("There is no employee with specified Id");
-            return null;
+        Optional<Employee> optionalEmployee= employeeDao.read(employeeId);
+        if( optionalEmployee.isPresent() ){
+            return optionalEmployee.get();
         }
-
-        System.out.println("ID: "+employee.getId());
-        System.out.println("Name: "+employee.getName());
-        System.out.println("Last Name: "+employee.getLastName()+"\n");
-
-        return employee;
+        return null;
     }
 
     public boolean update(int id, String name, String lastName, String dep){

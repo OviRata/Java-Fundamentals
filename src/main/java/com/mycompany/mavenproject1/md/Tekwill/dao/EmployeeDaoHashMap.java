@@ -8,12 +8,13 @@ import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  *
  * @author super
  */
-public class EmployeeDaoHashMap implements EmployeeDao{
+public class EmployeeDaoHashMap {
     private static HashMap<Integer, Employee> employeesHashMap=new HashMap<>();
     private static Department[] departmentsArr ={ 
         new Department("Finance"),
@@ -34,10 +35,10 @@ public class EmployeeDaoHashMap implements EmployeeDao{
     Employee getEmployeeById(int id){
         return employeesHashMap.get(id);
     }
+        
 
-
-    public Employee read(int employeeId){
-        return getEmployeeById(employeeId);
+    public Optional<Employee> read(int employeeId){
+        return Optional.ofNullable(getEmployeeById(employeeId));
     }
 
     public void update(int employeeId, String name, String lastName, String dep){
