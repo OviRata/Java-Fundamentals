@@ -24,10 +24,7 @@ public class EmployeeService {
 
     public Employee read(int employeeId){
         Optional<Employee> optionalEmployee= employeeDao.read(employeeId);
-        if( optionalEmployee.isPresent() ){
-            return optionalEmployee.get();
-        }
-        return null;
+        return optionalEmployee.orElse(null);
     }
 
     public boolean update(int id, String name, String lastName, String dep){
