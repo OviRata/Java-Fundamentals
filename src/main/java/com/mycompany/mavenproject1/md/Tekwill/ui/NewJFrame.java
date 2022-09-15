@@ -527,7 +527,10 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                     String name=employee.getName();
                     String lastName = employee.getLastName();
                     String dep = employee.getDepartment().getName();
-                    JOptionPane.showMessageDialog(null, "The employee with the specified id is:\n\tID: "+id+"\n\tName: "+name+"\n\tLast Name: "+lastName+"\n\tDepartment: "+dep);
+                    String creationDate = employee.getCreatedLocalDateTime().toLocalDate().toString();
+                    String updatedDate =( employee.getUpdatedLocalDateTime().orElse(null)==null )?("----"):( employee.getUpdatedLocalDateTime().get().toLocalDate().toString() );
+                    JOptionPane.showMessageDialog(null, "The employee with the specified id is:\n\tID: "+id+"\n\tName: "+name+"\n\tLast Name: "+lastName+"\n\tDepartment: "+dep
+                        +"\n\tCreation Date: "+creationDate+"\n\tUpdated Date: "+updatedDate);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "The employee with the specified id hasn't been found...");
