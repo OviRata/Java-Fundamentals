@@ -19,6 +19,8 @@ import com.mycompany.mavenproject1.md.Tekwill.service.EmployeeService;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -65,7 +67,7 @@ public class NewJFrame extends javax.swing.JFrame {
     
     },
     new String [] {
-        "ID", "Name", "Last Name", "Department"
+        "ID", "Name", "Last Name", "Department", "Creation Date", "Updated Date"
     }
 );
    
@@ -77,13 +79,13 @@ public class NewJFrame extends javax.swing.JFrame {
         {null, null, null, null}
     },
     new String [] {
-        "ID", "Name", "Last Name", "Department"
+        "ID", "Name", "Last Name", "Department", "Creation Date", "Updated Date"
     }
 );
 
    
    
-    void newTableModel(){
+    void newTableModel(javax.swing.table.DefaultTableModel model){
         
         Employee[] employees = employeeService.getArr();
         model.setRowCount(0);
@@ -96,13 +98,14 @@ public class NewJFrame extends javax.swing.JFrame {
         
     }
     
-    void tableUpdate(int id, String name, String lastName, String department){
+    void tableUpdate(javax.swing.table.DefaultTableModel model, int id, String name, String lastName, String department, LocalDateTime updatedLocalDateTime ){
         
         for(int i=0; i<model.getRowCount(); i++){
             if( Integer.valueOf( String.valueOf(model.getValueAt(i, 0))  )==id){
                 model.setValueAt(name, i, 1);
                 model.setValueAt(lastName, i, 2);
                 model.setValueAt(department, i, 3);
+                model.setValueAt(updatedLocalDateTime.toLocalDate().toString(), i, 5);
                 return;
             }
         }
@@ -110,11 +113,14 @@ public class NewJFrame extends javax.swing.JFrame {
         
     }
     
-    void tableCreate(Employee employee){
-         model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment().getName() }  );
+    void tableCreate(javax.swing.table.DefaultTableModel model, Employee employee){
+        String updatedDate = (employee.getUpdatedLocalDateTime().orElse(null)==null)?( "---" ):( employee.getUpdatedLocalDateTime().get().toLocalDate().toString() );
+         model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment().getName(),
+         employee.getCreatedLocalDateTime().toLocalDate().toString(), updatedDate
+         }  );
     }
     
-    void tableDelete(int id){
+    void tableDelete(javax.swing.table.DefaultTableModel model, int id){
         for(int i=0; i<model.getRowCount(); i++){
             if( Integer.valueOf(String.valueOf(model.getValueAt(i, 0) ))==id ){
                 model.removeRow(i);
@@ -336,7 +342,8 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                 try{
                     EmployeeExceptionChecker.checkInfo(name, lastName);
                     if(employeeService.update(id, name, lastName, dep)){
-                        tableUpdate(id, name, lastName, dep);
+                        LocalDateTime updatedLocalDateTime = employeeService.read(id).getUpdatedLocalDateTime().orElse(null);
+                        tableUpdate(model, id, name, lastName, dep, updatedLocalDateTime);
                     }
                     //newTableModel();
                     updateDialog.setVisible(false);
@@ -440,7 +447,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                     }
 
                     if(employeeService.create(employee)){
-                        tableCreate(employee);
+                        tableCreate(model, employee);
                     }
 
                     //newTableModel();
@@ -585,7 +592,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                 employeeService.delete(id);
 
                 //newTableModel();
-                tableDelete(id);
+                tableDelete(model, id);
                 deleteDialog.setVisible(false);
             }
         });
@@ -785,12 +792,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
                 for(int i=0; i<filteredEmployeesArray.size(); i++){
                     Employee employee = filteredEmployeesArray.get(i);
-                    filterResultsTableModel.addRow( new Object[]{
-                        employee.getId(),
-                        employee.getName(),
-                        employee.getLastName(),
-                        employee.getDepartment().getName(),
-                    } );
+                    tableCreate(filterResultsTableModel, employee);
                 }
 
                 filterResultsDialog.setModal(true);
@@ -818,18 +820,6 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
             }
         ));
         jScrollPane2.setViewportView(filterResultsTable);
-        filterResultsTableModel = new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID", "Name", "Last Name", "Department"
-            }
-        );
-
         filterResultsTable.setModel(filterResultsTableModel);
 
         javax.swing.GroupLayout filterResultsDialogLayout = new javax.swing.GroupLayout(filterResultsDialog.getContentPane());

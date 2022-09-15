@@ -1,14 +1,22 @@
 package com.mycompany.mavenproject1.md.Tekwill.domain;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 public class Employee {
     private int id;
     private String name;
     private String lastName;
     private Department department;
     private static int idGenerator;
+    private LocalDateTime createdLocalDateTime;
+    private Optional<LocalDateTime> updatedLocalDateTime; 
+    
 
     public Employee(){
        this.generateId();
+       this.createdLocalDateTime = LocalDateTime.now();
+       this.updatedLocalDateTime = Optional.ofNullable(null);
     }
 
     public Employee(String name, String lastName){
@@ -52,5 +60,16 @@ public class Employee {
     
     public Department getDepartment(){
         return department;
+    }
+    
+    public LocalDateTime getCreatedLocalDateTime(){
+        return createdLocalDateTime;
+    }
+    
+    public Optional<LocalDateTime> getUpdatedLocalDateTime(){
+        return updatedLocalDateTime;
+    }
+    public void setUpdatedLocalDateTime(){
+        this.updatedLocalDateTime = Optional.ofNullable( LocalDateTime.now() );
     }
 }

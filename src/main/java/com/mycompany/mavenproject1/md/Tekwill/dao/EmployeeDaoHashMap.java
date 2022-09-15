@@ -57,6 +57,7 @@ public class EmployeeDaoHashMap {
         employee.setName(name);
         employee.setLastName(lastName);
         employee.setDepartment(department);
+        employee.setUpdatedLocalDateTime();
         employeesHashMap.remove(employeeId);
         employeesHashMap.put(employeeId, employee);
         
