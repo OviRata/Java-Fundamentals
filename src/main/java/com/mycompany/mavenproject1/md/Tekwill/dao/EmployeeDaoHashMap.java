@@ -6,6 +6,7 @@ package com.mycompany.mavenproject1.md.Tekwill.dao;
 import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDao;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
+import java.time.LocalDateTime;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class EmployeeDaoHashMap {
         employee.setName(name);
         employee.setLastName(lastName);
         employee.setDepartment(department);
-        employee.setUpdatedLocalDateTime();
+        employee.setUpdatedLocalDateTime( LocalDateTime.now() );
         employeesHashMap.remove(employeeId);
         employeesHashMap.put(employeeId, employee);
         

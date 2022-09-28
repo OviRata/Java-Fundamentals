@@ -69,7 +69,17 @@ public class Employee {
     public Optional<LocalDateTime> getUpdatedLocalDateTime(){
         return updatedLocalDateTime;
     }
-    public void setUpdatedLocalDateTime(){
-        this.updatedLocalDateTime = Optional.ofNullable( LocalDateTime.now() );
+    public void setUpdatedLocalDateTime( LocalDateTime time ){
+        this.updatedLocalDateTime = Optional.ofNullable( time );
     }
+    
+    public void setCreatedLocalDateTime( LocalDateTime time ){
+        this.createdLocalDateTime = time;
+    }
+    
+    
+    public static void setIdGenerator(int x){
+        idGenerator=x;
+    }
+    
 }

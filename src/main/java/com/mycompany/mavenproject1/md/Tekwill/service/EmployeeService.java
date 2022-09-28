@@ -2,6 +2,7 @@ package com.mycompany.mavenproject1.md.Tekwill.service;
 
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
 import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDaoHashMap;
+import com.mycompany.mavenproject1.md.Tekwill.dao.EmployeeDaoImpl;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Department;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 
 public class EmployeeService {
-    private EmployeeDaoHashMap employeeDao= new EmployeeDaoHashMap();
+    private EmployeeDaoImpl employeeDao= new EmployeeDaoImpl();
 
     public boolean create(Employee employee){
         if(employee.getName().length()>0
@@ -23,7 +24,7 @@ public class EmployeeService {
     }
 
     public Employee read(int employeeId){
-        Optional<Employee> optionalEmployee= employeeDao.read(employeeId);
+        Optional<Employee> optionalEmployee= Optional.ofNullable(employeeDao.getEmployeeById(employeeId));
         return optionalEmployee.orElse(null);
     }
 
@@ -43,6 +44,7 @@ public class EmployeeService {
         employeeDao.delete(id);
     }
 
+    /*
     public void listEmployees(){
         Employee [] employeeList=employeeDao.getAll();
         for(Employee employee: employeeList){
@@ -54,13 +56,17 @@ public class EmployeeService {
             }
         System.out.println();
     }
+    */
     
     public Employee[] getArr(){
-        return employeeDao.getAll();
+        List<Employee> employeeList = getList();
+        Employee[] employeesArray = new Employee[ employeeList.size() ];
+        employeesArray = employeeList.toArray( employeesArray );
+        return employeesArray;
     }
     
     public List<Employee> getList(){
-        return Arrays.asList(getArr() );
+        return employeeDao.getAll();
     }
     
     public Department[] getDepartments(){

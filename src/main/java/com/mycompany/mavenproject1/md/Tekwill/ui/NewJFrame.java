@@ -4,6 +4,7 @@
  */
 package com.mycompany.mavenproject1.md.Tekwill.ui;
 
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,7 +93,8 @@ public class NewJFrame extends javax.swing.JFrame {
         for(int i=0; i<employees.length; i++){
             Employee employee = employees[i];
             if(employee!=null){
-                model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment().getName() }  );
+                model.addRow( new Object[]{ employee.getId(), employee.getName(), employee.getLastName(), employee.getDepartment().getName(), employee.getCreatedLocalDateTime().toLocalDate().toString(), 
+                    (employee.getUpdatedLocalDateTime().isEmpty())?("----"):( employee.getUpdatedLocalDateTime().get().toLocalDate().toString() ) }  );
             }
         }
         
@@ -440,7 +442,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                     Employee employee = new Employee(name, lastName);
 
                     for(int i=0; i<departmentsArr.length; i++){
-                        if(departmentsArr[i].getName()==dep){
+                        if(departmentsArr[i].getName().equals(dep)){
                             employee.setDepartment(departmentsArr[i]);
                             break;
                         }
@@ -523,7 +525,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
                 int id = parseInt(idField1.getText() );
                 Employee employee = employeeService.read(id);
-                if(employee != null){
+                if( (employee != null) && (employee.getDepartment()!=null) ){
                     String name=employee.getName();
                     String lastName = employee.getLastName();
                     String dep = employee.getDepartment().getName();
@@ -857,6 +859,16 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
         ));
         jScrollPane1.setViewportView(jTable1);
         jTable1.setModel(model);
+
+        Employee[] employeesArrayForTable1 = employeeService.getArr();
+        int maxId1=0;
+        for(int i=0; i<employeesArrayForTable1.length; i++){
+            tableCreate(model, employeesArrayForTable1[i]);
+            maxId1 = java.lang.Math.max(maxId1, employeesArrayForTable1[i].getId());
+        }
+
+        Employee.setIdGenerator(maxId1+1);
+
         jTable1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent me){
                 if(SwingUtilities.isRightMouseButton(me)){

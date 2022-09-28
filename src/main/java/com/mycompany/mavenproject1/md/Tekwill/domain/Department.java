@@ -27,5 +27,9 @@ public class Department {
         idGenerator++;
         id = idGenerator;
     }
-
+    
+    public int getId(){
+        return id;
+    }
+    
 }
