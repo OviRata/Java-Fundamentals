@@ -142,8 +142,9 @@ public class EmployeeDaoImpl {
     }
     
     public void delete(int id){
+        PreparedStatement pstmt = null;
         try{
-            PreparedStatement pstmt = connection.prepareStatement(
+             pstmt = connection.prepareStatement(
                     SQL_DELETE_EMPLOYEE
             );
             pstmt.setInt(1, id);
@@ -154,7 +155,7 @@ public class EmployeeDaoImpl {
         }
         finally{
             try{
-                connection.close();
+                pstmt.close();
             }
             catch(SQLException e){
                 e.printStackTrace();
