@@ -3,6 +3,9 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="updateDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -80,7 +83,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){&#xa;           if( ! isNumeric(idField.getText()) ){&#xa;                updateDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;           int id =Integer.valueOf( idField.getText() );&#xa;           String name = nameField.getText();&#xa;           String lastName=lastNameField.getText();&#xa;           String dep = (String) updateComboBox.getSelectedItem();&#xa;           &#xa;           try{&#xa;                EmployeeExceptionChecker.checkInfo(name, lastName);&#xa;                if(employeeService.update(id, name, lastName, dep)){&#xa;                    LocalDateTime updatedLocalDateTime = employeeService.read(id).getUpdatedLocalDateTime().orElse(null);&#xa;                    tableUpdate(model, id, name, lastName, dep, updatedLocalDateTime);&#xa;                }&#xa;                //newTableModel();&#xa;                updateDialog.setVisible(false);&#xa;            }&#xa;            catch(EmployeeException exception){&#xa;                EmployeeExceptionDialog.setModal(true);&#xa;                EmployeeExceptionDialog.setSize(280, 180);&#xa;                EmployeeExceptionText.setText(exception.getMessage());&#xa;                EmployeeExceptionDialog.setVisible(true);&#xa;            }&#xa;&#xa;&#xa;           //Employee employee = new Employee(name, lastName);&#xa;           &#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){&#xa;           if( ! isNumeric(idField.getText()) ){&#xa;                updateDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;           int id =Integer.valueOf( idField.getText() );&#xa;           String name = nameField.getText();&#xa;           String lastName=lastNameField.getText();&#xa;           String dep = (String) updateComboBox.getSelectedItem();&#xa;           &#xa;           try{&#xa;                EmployeeExceptionChecker.checkInfo(name, lastName);&#xa;                if(employeeService.update(id, name, lastName, dep)){&#xa;                    LocalDateTime updatedLocalDateTime = employeeService.read(id).getUpdatedLocalDateTime().orElse(null);&#xa;                    tableUpdate(model, id, name, lastName, dep, updatedLocalDateTime);&#xa;                }&#xa;                //newTableModel();&#xa;                updateDialog.setVisible(false);&#xa;            }&#xa;            catch(EmployeeException exception){&#xa;                EmployeeExceptionDialog.setModal(true);&#xa;                EmployeeExceptionDialog.setSize(280, 180);&#xa;                EmployeeExceptionText.setText(exception.getMessage());&#xa;                EmployeeExceptionDialog.setVisible(true);&#xa;            }&#xa;            &#xa;&#xa;&#xa;           //Employee employee = new Employee(name, lastName);&#xa;           &#xa;}  &#xa;});"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="idField">
@@ -116,7 +119,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="String[] departmentsString = new String[departmentsArr.length ] ;&#xa;for(int i=0; i&lt;departmentsArr.length; i++){&#xa;    &#xa;    departmentsString[i] = departmentsArr[i].getName();&#xa;    &#xa;}&#xa;updateComboBox.setModel( new javax.swing.DefaultComboBoxModel&lt;&gt; (departmentsString) );"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="updateComboBox.setModel( new javax.swing.DefaultComboBoxModel&lt;&gt; (departmentsString) );"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
@@ -128,6 +131,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="createDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -198,7 +204,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton1.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           String name = nameField1.getText();&#xa;           String lastName = lastNameField1.getText();&#xa;           String dep = (String)createComboBox.getSelectedItem();&#xa;           &#xa;           &#xa;           try{&#xa;                EmployeeExceptionChecker.checkInfo(name, lastName);&#xa;                Employee employee = new Employee(name, lastName);&#xa;           &#xa;                for(int i=0; i&lt;departmentsArr.length; i++){&#xa;                    if(departmentsArr[i].getName().equals(dep)){&#xa;                        employee.setDepartment(departmentsArr[i]);&#xa;                        break;&#xa;                    }&#xa;                }&#xa;&#xa;                if(employeeService.create(employee)){&#xa;                tableCreate(model, employee);&#xa;                }&#xa;           &#xa;                //newTableModel();&#xa;           &#xa;                createDialog.setVisible(false);&#xa;            }&#xa;            catch(EmployeeException exception){&#xa;                EmployeeExceptionDialog.setModal(true);&#xa;                EmployeeExceptionDialog.setSize(280, 180);&#xa;                EmployeeExceptionText.setText(exception.getMessage());&#xa;                EmployeeExceptionDialog.setVisible(true);&#xa;            }&#xa;           &#xa;           &#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton1.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           String name = nameField1.getText();&#xa;           String lastName = lastNameField1.getText();&#xa;           String dep = (String)createComboBox.getSelectedItem();&#xa;           &#xa;           &#xa;           try{&#xa;                EmployeeExceptionChecker.checkInfo(name, lastName);&#xa;                Employee employee = new Employee(name, lastName);&#xa;           &#xa;                for(int i=0; i&lt;departmentsArr.length; i++){&#xa;                    if(departmentsArr[i].getName().equals(dep)){&#xa;                        employee.setDepartment(departmentsArr[i]);&#xa;                        break;&#xa;                    }&#xa;                }&#xa;&#xa;                if(employeeService.create(employee)){&#xa;                tableCreate(model, employee);&#xa;                }&#xa;           &#xa;                //newTableModel();&#xa;           &#xa;                createDialog.setVisible(false);&#xa;            }&#xa;            catch(EmployeeException exception){&#xa;                EmployeeExceptionDialog.setModal(true);&#xa;                EmployeeExceptionDialog.setSize(280, 180);&#xa;                EmployeeExceptionText.setText(exception.getMessage());&#xa;                EmployeeExceptionDialog.setVisible(true);&#xa;            }&#xa;           &#xa;&#xa;           &#xa;}  &#xa;});"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="nameField1">
@@ -239,6 +245,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="findDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -304,6 +313,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="deleteDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -356,7 +368,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton3.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           &#xa;            if( ! isNumeric(idField2.getText()) ){&#xa;                    deleteDialog.setVisible(false);&#xa;                    return;&#xa;            }&#xa;&#xa;           int id = parseInt(idField2.getText() );&#xa;           &#xa;           employeeService.delete(id);&#xa;           &#xa;           //newTableModel();&#xa;            tableDelete(model, id);&#xa;            deleteDialog.setVisible(false);&#xa;}  &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="okButton3.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           &#xa;            if( ! isNumeric(idField2.getText()) ){&#xa;                    deleteDialog.setVisible(false);&#xa;                    return;&#xa;            }&#xa;&#xa;           int id = parseInt(idField2.getText() );&#xa;           &#xa;           employeeService.delete(id);&#xa;           &#xa;           //newTableModel();&#xa;            tableDelete(model, id);&#xa;            &#xa;&#xa;            deleteDialog.setVisible(false);&#xa;}  &#xa;});"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="idField2">
@@ -449,6 +461,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="filterDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -578,6 +593,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="filterResultsDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -650,6 +668,322 @@
         </Container>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JDialog" name="departmentCreateDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="departmentCreateCancel" min="-2" pref="95" max="-2" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <Component id="departmentCreateOk" min="-2" pref="99" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="departmentCreateName" min="-2" pref="108" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departmentCreateName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departmentCreateCancel" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="departmentCreateOk" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="departmentCreateCancel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentCreateCancel.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           departmentCreateDialog.setVisible(false);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="departmentCreateOk">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="OK"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentCreateOk.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;         String name = departmentCreateName.getText();&#xa;&#xa;         if(name.length()==0){&#xa;            return;&#xa;         }  &#xa;         Department department = new Department();&#xa;         department.setName(name);&#xa;         departmentService.create(department);&#xa;         &#xa;         setDepartmentsArr();&#xa;         setDepartmentsString();&#xa;         newDepartmentTable(departmentTableModel, departmentsArr);&#xa;&#xa;         departmentCreateDialog.setVisible(false);&#xa;           &#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="departmentCreateName">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel15">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Name:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="departmentFindDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="departmentFindCancel" min="-2" pref="95" max="-2" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <Component id="departmentFindOk" min="-2" pref="99" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                  <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="departmentFindId" min="-2" pref="108" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departmentFindId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departmentFindCancel" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="departmentFindOk" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="departmentFindCancel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentFindCancel.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           departmentFindDialog.setVisible(false);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="departmentFindOk">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="OK"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentFindOk.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;            &#xa;            if( ! isNumeric(departmentFindId.getText() ) ){&#xa;                findDialog.setVisible(false);&#xa;                return;&#xa;            }&#xa;&#xa;           int id = parseInt(departmentFindId.getText() );&#xa;           Department department = departmentService.getDepartmentById(id);&#xa;           if( (department != null)  ){&#xa;                String name=department.getName();&#xa;                JOptionPane.showMessageDialog(null, &quot;The department with the specified id is:\n\tID: &quot;+id+&quot;\n\tName: &quot;+name);&#xa;           }&#xa;            else{&#xa;               JOptionPane.showMessageDialog(null, &quot;The department with the specified id hasn&apos;t been found...&quot;); &#xa;            }&#xa;&#xa;&#xa;           departmentFindDialog.setVisible(false);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="departmentFindId">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel18">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="ID:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="departmentDeleteDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="departmentDeleteCancel" min="-2" pref="95" max="-2" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <Component id="departmentDeleteOk" min="-2" pref="99" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="departmentDeleteId" min="-2" pref="108" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departmentDeleteId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departmentDeleteCancel" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="departmentDeleteOk" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="departmentDeleteCancel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancel"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentDeleteCancel.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           departmentDeleteDialog.setVisible(false);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="departmentDeleteOk">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="OK"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentDeleteOk.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           &#xa;            if( ! isNumeric(departmentDeleteId.getText()) ){&#xa;                    deleteDialog.setVisible(false);&#xa;                    return;&#xa;            }&#xa;&#xa;           int id = parseInt(departmentDeleteId.getText() );&#xa;           &#xa;           Employee[] employeesArray = employeeService.getArr();&#xa;           for(int i=0; i&lt;employeesArray.length; i++){&#xa;                if(employeesArray[i].getDepartment().getId()==id){&#xa;                    JOptionPane.showMessageDialog(&#xa;                        null, &#xa;                    &quot;The department with the specified Id cannot be deleted, because there are employees assigned to it.&quot;);&#xa;                    &#xa;                    departmentDeleteDialog.setVisible(false);&#xa;                    return;&#xa;                    }&#xa;            }&#xa;&#xa;           departmentService.delete(id);&#xa;           &#xa;&#xa;&#xa;           setDepartmentsArr();&#xa;           setDepartmentsString();&#xa;           newDepartmentTable(departmentTableModel, departmentsArr); &#xa;            &#xa;&#xa;            departmentDeleteDialog.setVisible(false);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="departmentDeleteId">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel19">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="ID:"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JDialog" name="DepartmentsDialog">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="setDepartmentsArr();&#xa;setDepartmentsString();"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="createDepartment" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="findDepartment" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="deleteDepartment" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="departmentsScrollPane" min="-2" pref="388" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="createDepartment" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="findDepartment" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteDepartment" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="departmentsScrollPane" min="-2" pref="167" max="-2" attributes="0"/>
+                  <EmptySpace pref="61" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="departmentsScrollPane">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="departmentTable">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="3" rowCount="4">
+                    <Column editable="true" title="ID" type="java.lang.Object"/>
+                    <Column editable="true" title="Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Last Name" type="java.lang.Object"/>
+                  </Table>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="departmentTable.setModel(departmentTableModel);&#xa;&#xa;newDepartmentTable(departmentTableModel, departmentsArr);">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="createDepartment">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Create"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="createDepartment.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;       departmentCreateDialog.setModal(true);&#xa;       departmentCreateDialog.setSize(300, 250);&#xa;       departmentCreateDialog.setVisible(true);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="findDepartment">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Find"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="findDepartment.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;   departmentFindDialog.setModal(true);&#xa;    departmentFindDialog.setSize(300, 200);&#xa;    departmentFindDialog.setVisible(true);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="deleteDepartment">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="deleteDepartment.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;    departmentDeleteDialog.setModal(true);&#xa;    departmentDeleteDialog.setSize(300, 250);&#xa;    departmentDeleteDialog.setVisible(true);&#xa;}  &#xa;});"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -694,6 +1028,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="filterButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="departmentsButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -721,7 +1057,10 @@
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="filterButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="filterButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="departmentsButton" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -744,7 +1083,7 @@
                 <Column editable="true" title="Last Name" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="jTable1.setModel(model);&#xa;&#xa;Employee[] employeesArrayForTable1 = employeeService.getArr();&#xa;int maxId1=0;&#xa;for(int i=0; i&lt;employeesArrayForTable1.length; i++){&#xa;    tableCreate(model, employeesArrayForTable1[i]);&#xa;    maxId1 = java.lang.Math.max(maxId1, employeesArrayForTable1[i].getId());&#xa;}&#xa;&#xa;Employee.setIdGenerator(maxId1+1);&#xa;&#xa;&#xa;jTable1.addMouseListener(new MouseAdapter(){&#xa;public void mouseClicked(MouseEvent me){&#xa;    if(SwingUtilities.isRightMouseButton(me)){&#xa;        int row = jTable1.rowAtPoint(me.getPoint() );&#xa;        popUpRow = row;&#xa;        TablePopUpMenu.show(jTable1, me.getX(), me.getY());&#xa;        &#xa;    }&#xa;}&#xa;&#xa;});">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="setDepartmentsArr();&#xa;setDepartmentsString();&#xa;&#xa;jTable1.setModel(model);&#xa;&#xa;Employee[] employeesArrayForTable1 = employeeService.getArr();&#xa;int maxId1=0;&#xa;for(int i=0; i&lt;employeesArrayForTable1.length; i++){&#xa;    tableCreate(model, employeesArrayForTable1[i]);&#xa;    maxId1 = java.lang.Math.max(maxId1, employeesArrayForTable1[i].getId());&#xa;}&#xa;&#xa;Employee.setIdGenerator(maxId1+1);&#xa;&#xa;&#xa;jTable1.addMouseListener(new MouseAdapter(){&#xa;public void mouseClicked(MouseEvent me){&#xa;    if(SwingUtilities.isRightMouseButton(me)){&#xa;        int row = jTable1.rowAtPoint(me.getPoint() );&#xa;        popUpRow = row;&#xa;        TablePopUpMenu.show(jTable1, me.getX(), me.getY());&#xa;        &#xa;    }&#xa;}&#xa;&#xa;});">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
@@ -777,7 +1116,7 @@
         <Property name="text" type="java.lang.String" value="Create"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="createButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           createDialog.setModal(true);&#xa;           &#xa;           nameField1.setText(&quot;&quot;);&#xa;           lastNameField1.setText(&quot;&quot;);&#xa;&#xa;           createDialog.setSize(new Dimension(350, 300));&#xa;           createDialog.setVisible(true);&#xa;           //...&#xa;}  &#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="createButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           createDialog.setModal(true);&#xa;           &#xa;           nameField1.setText(&quot;&quot;);&#xa;           lastNameField1.setText(&quot;&quot;);&#xa;           createComboBox.setModel( new javax.swing.DefaultComboBoxModel&lt;&gt; (departmentsString) );&#xa;&#xa;           createDialog.setSize(new Dimension(350, 300));&#xa;           createDialog.setVisible(true);&#xa;           //...&#xa;}  &#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="findButton">
@@ -796,7 +1135,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="editButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           updateDialog.setModal(true);&#xa;           &#xa;           idField.setText(&quot;&quot;);&#xa;           lastNameField.setText(&quot;&quot;);&#xa;           nameField.setText(&quot;&quot;);&#xa;&#xa;           updateDialog.setSize(new Dimension(350, 300));&#xa;           updateDialog.setVisible(true);&#xa;}  &#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="editButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           updateDialog.setModal(true);&#xa;           &#xa;           idField.setText(&quot;&quot;);&#xa;           lastNameField.setText(&quot;&quot;);&#xa;           nameField.setText(&quot;&quot;);&#xa;           updateComboBox.setModel( new javax.swing.DefaultComboBoxModel&lt;&gt; (departmentsString) );&#xa;           updateDialog.setSize(new Dimension(350, 300));&#xa;           updateDialog.setVisible(true);&#xa;}  &#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="deleteButton">
@@ -815,7 +1154,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterButtonActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;          filterDialog.setModal(true);&#xa;          &#xa;          filterNameField.setText(&quot;&quot;);&#xa;          filterLastNameField.setText(&quot;&quot;);&#xa;          filterComboBox.setSelectedItem(&quot;Any Department&quot;);&#xa;&#xa;          filterDialog.setSize(300, 260);&#xa;          filterDialog.setVisible(true);&#xa;}  &#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="filterButton.addActionListener(new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;          filterDialog.setModal(true);&#xa;          &#xa;          filterNameField.setText(&quot;&quot;);&#xa;          filterLastNameField.setText(&quot;&quot;);&#xa;          &#xa;          String[] comboBoxDepartmentsItems = new String [departmentsArr.length+1];&#xa;&#xa;            for(int i = 0; i&lt;departmentsArr.length; i++){&#xa;                comboBoxDepartmentsItems[i] = departmentsArr[i].getName();&#xa;            }&#xa;            comboBoxDepartmentsItems[ comboBoxDepartmentsItems.length-1 ] = &quot;Any Department&quot;;&#xa;            javax.swing.DefaultComboBoxModel comboBoxModel = new javax.swing.DefaultComboBoxModel&lt;&gt;( comboBoxDepartmentsItems );&#xa;            filterComboBox.setModel(comboBoxModel);&#xa;          &#xa;            filterComboBox.setSelectedItem(&quot;Any Department&quot;);&#xa;          &#xa;&#xa;          filterDialog.setSize(300, 260);&#xa;          filterDialog.setVisible(true);&#xa;}  &#xa;});"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="departmentsButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Departments"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="departmentsButton.addActionListener( new ActionListener(){  &#xa;public void actionPerformed(ActionEvent e){  &#xa;           DepartmentsDialog.setModal(true);&#xa;           DepartmentsDialog.setSize(450, 350);&#xa;           DepartmentsDialog.setVisible(true);&#xa;           &#xa;}  &#xa;} );"/>
       </AuxValues>
     </Component>
   </SubComponents>

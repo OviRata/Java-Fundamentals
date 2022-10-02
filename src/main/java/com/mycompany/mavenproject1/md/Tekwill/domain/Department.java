@@ -28,8 +28,16 @@ public class Department {
         id = idGenerator;
     }
     
+    public void setId(int id){
+        this.id = id;
+    }
+    
     public int getId(){
         return id;
+    }
+    
+    static public void setIdGenerator(int x){
+        idGenerator = x;
     }
     
 }

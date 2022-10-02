@@ -10,15 +10,18 @@ import java.util.List;
 
 public class EmployeeDaoImpl {
     private final Connection connection = JDBCconnection.createConnection();
-    
-        private static Department[] departmentsArr ={ 
-        new Department("Finance"),
-        new Department("IT"), 
-        new Department("Production"),
-        new Department("Marketing"), 
-        new Department("Research and Development"),
-        new Department("Human Resources") } ;
-
+    private static DepartmentsDAOPostgres departmentDao = new DepartmentsDAOPostgres();
+        private static Department[] departmentsArr = departmentDao.getAll();
+        
+    private static void setDepartmentsArr(){
+        departmentsArr = departmentDao.getAll();
+        int newGenerator=0;
+        for(int i=0; i<departmentsArr.length; i++){
+            newGenerator=java.lang.Math.max(newGenerator, departmentsArr[i].getId());
+        }
+        Department.setIdGenerator(newGenerator+1);
+    }
+        
     private final String SQL_CREATE_EMPLOYEE =
             "INSERT INTO EmployeeTable " +
                     "(id, name, lastname, departmentid, creationlocaldatetime, updatedlocaldatetime)"+
@@ -73,6 +76,7 @@ public class EmployeeDaoImpl {
     }
     
     public Department getDepartmentById(int departmentId){
+        setDepartmentsArr();
         for(int i=0; i<departmentsArr.length; i++){
             //System.out.println(departmentsArr[i].getName());
             if(departmentsArr[i].getId()==departmentId){
@@ -83,6 +87,7 @@ public class EmployeeDaoImpl {
     }
     
     public Department getDepartmentByName(String departmentName){
+        setDepartmentsArr();
         for(int i=0; i<departmentsArr.length; i++){
             if(departmentsArr[i].getName().equals(departmentName)){
                 return departmentsArr[i];

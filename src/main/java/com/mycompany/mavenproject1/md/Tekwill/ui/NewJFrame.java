@@ -18,6 +18,7 @@ import com.mycompany.mavenproject1.md.Tekwill.exceptions.EmployeeExceptionChecke
 
 import com.mycompany.mavenproject1.md.Tekwill.service.EmployeeService;
 import com.mycompany.mavenproject1.md.Tekwill.domain.Employee;
+import com.mycompany.mavenproject1.md.Tekwill.service.DepartmentService;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -60,8 +61,29 @@ public class NewJFrame extends javax.swing.JFrame {
     
     
     EmployeeService employeeService = new EmployeeService();
-    //EmployeeDao employeeDao = new EmployeeDao();
-    Department[] departmentsArr = employeeService.getDepartments();
+    DepartmentService departmentService = new DepartmentService();
+    
+    
+    Department[] departmentsArr = departmentService.getArr();
+    String[] departmentsString = null;
+    void setDepartmentsArr(){
+        departmentsArr = departmentService.getArr();
+        int newGenerator=0;
+        for(int i=0; i<departmentsArr.length; i++){
+            newGenerator=java.lang.Math.max(newGenerator, departmentsArr[i].getId());
+        }
+        Department.setIdGenerator(newGenerator+1);
+    }
+    
+    void setDepartmentsString(){
+      departmentsString = new String[departmentsArr.length ];
+      for(int i=0; i<departmentsArr.length; i++){
+          departmentsString[i] = departmentsArr[i].getName();
+      }
+      //return departmentsString;
+    };
+    
+    
     
    DefaultTableModel model=new DefaultTableModel(
     new Object [][] {
@@ -84,7 +106,50 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 );
 
+   javax.swing.table.DefaultTableModel departmentTableModel = new javax.swing.table.DefaultTableModel(
+    new Object [][] {
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null}
+    },
+    new String [] {
+        "ID", "Name"
+    }
+);
    
+   void departmentTableCreate(javax.swing.table.DefaultTableModel model, Department department){
+        model.addRow( new Object[]{ 
+                department.getId(),
+                department.getName()
+         }  );
+   }
+   
+   void departmentTableUpdate(javax.swing.table.DefaultTableModel model, int id, String name){
+       for(int i=0; i<model.getRowCount(); i++){
+            if( Integer.valueOf( String.valueOf(model.getValueAt(i, 0))  )==id){
+                model.setValueAt(name, i, 1);
+                return;
+            }
+        }
+   }
+   
+   void departmentTableDelete(javax.swing.table.DefaultTableModel model, int id){
+       for(int i=0; i<model.getRowCount(); i++){
+            if( Integer.valueOf( String.valueOf(model.getValueAt(i, 0))  )==id){
+                model.removeRow(i);
+                return;
+            }
+        }
+   }
+   
+   void newDepartmentTable(javax.swing.table.DefaultTableModel model, Department[] departmentsArr){
+       model.setRowCount(0);
+       for(int i=0; i<departmentsArr.length; i++){
+           Department department = departmentsArr[i];
+           departmentTableCreate(model, department);
+       }
+   }
    
     void newTableModel(javax.swing.table.DefaultTableModel model){
         
@@ -133,6 +198,7 @@ public class NewJFrame extends javax.swing.JFrame {
     
     
     int popUpRow = -1;
+    
     
     
     
@@ -201,6 +267,8 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setDepartmentsArr();
+        setDepartmentsString();
         updateDialog = new javax.swing.JDialog();
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
@@ -212,6 +280,8 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
         nameField = new javax.swing.JTextField();
         updateComboBox = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        setDepartmentsArr();
+        setDepartmentsString();
         createDialog = new javax.swing.JDialog();
         cancelButton1 = new javax.swing.JButton();
         okButton1 = new javax.swing.JButton();
@@ -221,11 +291,15 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
         lastNameField1 = new javax.swing.JTextField();
         createComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        setDepartmentsArr();
+        setDepartmentsString();
         findDialog = new javax.swing.JDialog();
         cancelButton2 = new javax.swing.JButton();
         okButton2 = new javax.swing.JButton();
         idField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        setDepartmentsArr();
+        setDepartmentsString();
         deleteDialog = new javax.swing.JDialog();
         cancelButton3 = new javax.swing.JButton();
         okButton3 = new javax.swing.JButton();
@@ -251,6 +325,35 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
         filterResultsDialog = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         filterResultsTable = new javax.swing.JTable();
+        setDepartmentsArr();
+        setDepartmentsString();
+        departmentCreateDialog = new javax.swing.JDialog();
+        departmentCreateCancel = new javax.swing.JButton();
+        departmentCreateOk = new javax.swing.JButton();
+        departmentCreateName = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        setDepartmentsArr();
+        setDepartmentsString();
+        departmentFindDialog = new javax.swing.JDialog();
+        departmentFindCancel = new javax.swing.JButton();
+        departmentFindOk = new javax.swing.JButton();
+        departmentFindId = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        setDepartmentsArr();
+        setDepartmentsString();
+        departmentDeleteDialog = new javax.swing.JDialog();
+        departmentDeleteCancel = new javax.swing.JButton();
+        departmentDeleteOk = new javax.swing.JButton();
+        departmentDeleteId = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        setDepartmentsArr();
+        setDepartmentsString();
+        DepartmentsDialog = new javax.swing.JDialog();
+        departmentsScrollPane = new javax.swing.JScrollPane();
+        departmentTable = new javax.swing.JTable();
+        createDepartment = new javax.swing.JButton();
+        findDepartment = new javax.swing.JButton();
+        deleteDepartment = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -259,6 +362,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         filterButton = new javax.swing.JButton();
+        departmentsButton = new javax.swing.JButton();
 
         cancelButton.setText("Cancel");
 
@@ -361,12 +465,6 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
             }
         });
-        String[] departmentsString = new String[departmentsArr.length ] ;
-        for(int i=0; i<departmentsArr.length; i++){
-
-            departmentsString[i] = departmentsArr[i].getName();
-
-        }
         updateComboBox.setModel( new javax.swing.DefaultComboBoxModel<> (departmentsString) );
 
         cancelButton1.setText("Cancel");
@@ -598,6 +696,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
                 //newTableModel();
                 tableDelete(model, id);
+
                 deleteDialog.setVisible(false);
             }
         });
@@ -813,6 +912,9 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
         filterComboBoxSort.setModel( comboBoxSortModel );
 
+        setDepartmentsArr();
+        setDepartmentsString();
+
         filterResultsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -844,6 +946,284 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                 .addContainerGap(98, Short.MAX_VALUE))
         );
 
+        setDepartmentsArr();
+        setDepartmentsString();
+
+        departmentCreateCancel.setText("Cancel");
+
+        departmentCreateOk.setText("OK");
+
+        jLabel15.setText("Name:");
+
+        javax.swing.GroupLayout departmentCreateDialogLayout = new javax.swing.GroupLayout(departmentCreateDialog.getContentPane());
+        departmentCreateDialog.getContentPane().setLayout(departmentCreateDialogLayout);
+        departmentCreateDialogLayout.setHorizontalGroup(
+            departmentCreateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(departmentCreateDialogLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(departmentCreateCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(departmentCreateOk, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, departmentCreateDialogLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addComponent(departmentCreateName, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74))
+        );
+        departmentCreateDialogLayout.setVerticalGroup(
+            departmentCreateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, departmentCreateDialogLayout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(departmentCreateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(departmentCreateName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addGap(18, 18, 18)
+                .addGroup(departmentCreateDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(departmentCreateCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(departmentCreateOk, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
+        );
+
+        departmentCreateCancel.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                departmentCreateDialog.setVisible(false);
+            }
+        });
+        departmentCreateOk.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String name = departmentCreateName.getText();
+
+                if(name.length()==0){
+                    return;
+                }
+                Department department = new Department();
+                department.setName(name);
+                departmentService.create(department);
+
+                setDepartmentsArr();
+                setDepartmentsString();
+                newDepartmentTable(departmentTableModel, departmentsArr);
+
+                departmentCreateDialog.setVisible(false);
+
+            }
+        });
+
+        departmentFindCancel.setText("Cancel");
+
+        departmentFindOk.setText("OK");
+
+        jLabel18.setText("ID:");
+
+        javax.swing.GroupLayout departmentFindDialogLayout = new javax.swing.GroupLayout(departmentFindDialog.getContentPane());
+        departmentFindDialog.getContentPane().setLayout(departmentFindDialogLayout);
+        departmentFindDialogLayout.setHorizontalGroup(
+            departmentFindDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(departmentFindDialogLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(departmentFindCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(departmentFindOk, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
+            .addGroup(departmentFindDialogLayout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addComponent(departmentFindId, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        departmentFindDialogLayout.setVerticalGroup(
+            departmentFindDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, departmentFindDialogLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(departmentFindDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(departmentFindId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
+                .addGap(18, 18, 18)
+                .addGroup(departmentFindDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(departmentFindCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(departmentFindOk, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
+        );
+
+        departmentFindCancel.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                departmentFindDialog.setVisible(false);
+            }
+        });
+        departmentFindOk.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+
+                if( ! isNumeric(departmentFindId.getText() ) ){
+                    findDialog.setVisible(false);
+                    return;
+                }
+
+                int id = parseInt(departmentFindId.getText() );
+                Department department = departmentService.getDepartmentById(id);
+                if( (department != null)  ){
+                    String name=department.getName();
+                    JOptionPane.showMessageDialog(null, "The department with the specified id is:\n\tID: "+id+"\n\tName: "+name);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "The department with the specified id hasn't been found...");
+                }
+
+                departmentFindDialog.setVisible(false);
+            }
+        });
+
+        departmentDeleteCancel.setText("Cancel");
+
+        departmentDeleteOk.setText("OK");
+
+        jLabel19.setText("ID:");
+
+        javax.swing.GroupLayout departmentDeleteDialogLayout = new javax.swing.GroupLayout(departmentDeleteDialog.getContentPane());
+        departmentDeleteDialog.getContentPane().setLayout(departmentDeleteDialogLayout);
+        departmentDeleteDialogLayout.setHorizontalGroup(
+            departmentDeleteDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(departmentDeleteDialogLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(departmentDeleteCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(departmentDeleteOk, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
+            .addGroup(departmentDeleteDialogLayout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(jLabel19)
+                .addGap(18, 18, 18)
+                .addComponent(departmentDeleteId, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        departmentDeleteDialogLayout.setVerticalGroup(
+            departmentDeleteDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, departmentDeleteDialogLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(departmentDeleteDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(departmentDeleteId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19))
+                .addGap(18, 18, 18)
+                .addGroup(departmentDeleteDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(departmentDeleteCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(departmentDeleteOk, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
+        );
+
+        departmentDeleteCancel.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                departmentDeleteDialog.setVisible(false);
+            }
+        });
+        departmentDeleteOk.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+
+                if( ! isNumeric(departmentDeleteId.getText()) ){
+                    deleteDialog.setVisible(false);
+                    return;
+                }
+
+                int id = parseInt(departmentDeleteId.getText() );
+
+                Employee[] employeesArray = employeeService.getArr();
+                for(int i=0; i<employeesArray.length; i++){
+                    if(employeesArray[i].getDepartment().getId()==id){
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "The department with the specified Id cannot be deleted, because there are employees assigned to it.");
+
+                        departmentDeleteDialog.setVisible(false);
+                        return;
+                    }
+                }
+
+                departmentService.delete(id);
+
+                setDepartmentsArr();
+                setDepartmentsString();
+                newDepartmentTable(departmentTableModel, departmentsArr);
+
+                departmentDeleteDialog.setVisible(false);
+            }
+        });
+
+        departmentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Last Name"
+            }
+        ));
+        departmentsScrollPane.setViewportView(departmentTable);
+        departmentTable.setModel(departmentTableModel);
+
+        newDepartmentTable(departmentTableModel, departmentsArr);
+
+        createDepartment.setText("Create");
+
+        findDepartment.setText("Find");
+
+        deleteDepartment.setText("Delete");
+
+        javax.swing.GroupLayout DepartmentsDialogLayout = new javax.swing.GroupLayout(DepartmentsDialog.getContentPane());
+        DepartmentsDialog.getContentPane().setLayout(DepartmentsDialogLayout);
+        DepartmentsDialogLayout.setHorizontalGroup(
+            DepartmentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DepartmentsDialogLayout.createSequentialGroup()
+                .addGroup(DepartmentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DepartmentsDialogLayout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(createDepartment)
+                        .addGap(40, 40, 40)
+                        .addComponent(findDepartment)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteDepartment))
+                    .addGroup(DepartmentsDialogLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(departmentsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        DepartmentsDialogLayout.setVerticalGroup(
+            DepartmentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DepartmentsDialogLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(DepartmentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createDepartment)
+                    .addComponent(findDepartment)
+                    .addComponent(deleteDepartment))
+                .addGap(30, 30, 30)
+                .addComponent(departmentsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+
+        createDepartment.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                departmentCreateDialog.setModal(true);
+                departmentCreateDialog.setSize(300, 250);
+                departmentCreateDialog.setVisible(true);
+            }
+        });
+        findDepartment.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                departmentFindDialog.setModal(true);
+                departmentFindDialog.setSize(300, 200);
+                departmentFindDialog.setVisible(true);
+            }
+        });
+        deleteDepartment.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                departmentDeleteDialog.setModal(true);
+                departmentDeleteDialog.setSize(300, 250);
+                departmentDeleteDialog.setVisible(true);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -858,6 +1238,9 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
             }
         ));
         jScrollPane1.setViewportView(jTable1);
+        setDepartmentsArr();
+        setDepartmentsString();
+
         jTable1.setModel(model);
 
         Employee[] employeesArrayForTable1 = employeeService.getArr();
@@ -901,6 +1284,8 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
             }
         });
 
+        departmentsButton.setText("Departments");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -923,7 +1308,9 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(filterButton)))
+                        .addComponent(filterButton)
+                        .addGap(35, 35, 35)
+                        .addComponent(departmentsButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -943,7 +1330,9 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(filterButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filterButton)
+                    .addComponent(departmentsButton))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -953,6 +1342,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
                 nameField1.setText("");
                 lastNameField1.setText("");
+                createComboBox.setModel( new javax.swing.DefaultComboBoxModel<> (departmentsString) );
 
                 createDialog.setSize(new Dimension(350, 300));
                 createDialog.setVisible(true);
@@ -976,7 +1366,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
                 idField.setText("");
                 lastNameField.setText("");
                 nameField.setText("");
-
+                updateComboBox.setModel( new javax.swing.DefaultComboBoxModel<> (departmentsString) );
                 updateDialog.setSize(new Dimension(350, 300));
                 updateDialog.setVisible(true);
             }
@@ -997,12 +1387,30 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
                 filterNameField.setText("");
                 filterLastNameField.setText("");
+
+                String[] comboBoxDepartmentsItems = new String [departmentsArr.length+1];
+
+                for(int i = 0; i<departmentsArr.length; i++){
+                    comboBoxDepartmentsItems[i] = departmentsArr[i].getName();
+                }
+                comboBoxDepartmentsItems[ comboBoxDepartmentsItems.length-1 ] = "Any Department";
+                javax.swing.DefaultComboBoxModel comboBoxModel = new javax.swing.DefaultComboBoxModel<>( comboBoxDepartmentsItems );
+                filterComboBox.setModel(comboBoxModel);
+
                 filterComboBox.setSelectedItem("Any Department");
 
                 filterDialog.setSize(300, 260);
                 filterDialog.setVisible(true);
             }
         });
+        departmentsButton.addActionListener( new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                DepartmentsDialog.setModal(true);
+                DepartmentsDialog.setSize(450, 350);
+                DepartmentsDialog.setVisible(true);
+
+            }
+        } );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1056,6 +1464,7 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Delete;
+    private javax.swing.JDialog DepartmentsDialog;
     private javax.swing.JDialog EmployeeExceptionDialog;
     private javax.swing.JToggleButton EmployeeExceptionOKButton;
     private javax.swing.JLabel EmployeeExceptionText;
@@ -1068,9 +1477,26 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
     private javax.swing.JButton cancelButton3;
     private javax.swing.JButton createButton;
     private javax.swing.JComboBox<String> createComboBox;
+    private javax.swing.JButton createDepartment;
     private javax.swing.JDialog createDialog;
     private javax.swing.JButton deleteButton;
+    private javax.swing.JButton deleteDepartment;
     private javax.swing.JDialog deleteDialog;
+    private javax.swing.JButton departmentCreateCancel;
+    private javax.swing.JDialog departmentCreateDialog;
+    private javax.swing.JTextField departmentCreateName;
+    private javax.swing.JButton departmentCreateOk;
+    private javax.swing.JButton departmentDeleteCancel;
+    private javax.swing.JDialog departmentDeleteDialog;
+    private javax.swing.JTextField departmentDeleteId;
+    private javax.swing.JButton departmentDeleteOk;
+    private javax.swing.JButton departmentFindCancel;
+    private javax.swing.JDialog departmentFindDialog;
+    private javax.swing.JTextField departmentFindId;
+    private javax.swing.JButton departmentFindOk;
+    private javax.swing.JTable departmentTable;
+    private javax.swing.JButton departmentsButton;
+    private javax.swing.JScrollPane departmentsScrollPane;
     private javax.swing.JButton editButton;
     private javax.swing.JButton filterApplyButton;
     private javax.swing.JButton filterButton;
@@ -1086,12 +1512,16 @@ ArrayList<Employee> filterEmployeesArray(String name, String lastName, String de
     private javax.swing.JDialog filterResultsDialog;
     private javax.swing.JTable filterResultsTable;
     private javax.swing.JButton findButton;
+    private javax.swing.JButton findDepartment;
     private javax.swing.JDialog findDialog;
     private javax.swing.JTextField idField;
     private javax.swing.JTextField idField1;
     private javax.swing.JTextField idField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
